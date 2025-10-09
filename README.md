@@ -1,5 +1,5 @@
 # Programación web con Spring Framework & Spring Boot
-<img width="331" height="266" alt="image" src="https://github.com/user-attachments/assets/d778ceb0-a22f-4cbb-8dcf-c75d3d16ba71" />
+<img width="150" height="180" alt="image" src="https://github.com/user-attachments/assets/d778ceb0-a22f-4cbb-8dcf-c75d3d16ba71" />
 
 ## Primeros pasos
 
