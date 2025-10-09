@@ -11,7 +11,7 @@ Es una extensión del framework Spring que tiene como finalidad simplificar la c
 
 Solo necesita una configuración básica, que permite el uso de librerías, integración con otras herramientas o incluso otros proyectos Spring.
 
-<img width="652" height="381" alt="image" src="https://github.com/user-attachments/assets/fd3ec4ae-688e-4922-a787-bb57c6ce75a0" />
+<img width="400" height="250" alt="image" src="https://github.com/user-attachments/assets/fd3ec4ae-688e-4922-a787-bb57c6ce75a0" />
 
 *Referencias: https://www.youtube.com/watch?v=8X2acANBuLk&t=857s , https://www.arquitecturajava.com/spring-boot-que-es/*
 
