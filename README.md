@@ -49,7 +49,7 @@ src/
 
 ### Principales componentes
 
-https://github.com/profeMelola/DWES-05-2024-25/blob/main/APOYO_TEORIA/Componentes.md
+
 
 ## Primeras aplicaciones
 
