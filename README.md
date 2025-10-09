@@ -47,10 +47,6 @@ src/
 
 ```
 
-### Principales componentes
-
-
-
 ## Primeras aplicaciones
 
 ### Primera aplicación Spring "Hola Mundo"
