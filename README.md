@@ -47,6 +47,20 @@ src/
 
 ```
 
+## Principales anotaciones
+
+| Anotación | Rol en la aplicación | Tipo |
+|----------|-----------------------|------|
+| @SpringBootApplication | Clase principal de inicio | Configuración |
+| @RestController | Controlador REST (devuelve JSON) | Web |
+| @Controller | Controlador MVC (devuelve vistas) | Web |
+| @Service | Lógica de negocio | Capa de servicio |
+| @Repository | Acceso a datos | Capa de persistencia |
+| @Entity | Entidad de base de datos | Modelo |
+| @Configuration | Define beans/configuración | Configuración |
+
+[Ir a las anotaciones de Spring](spring-annotations.md)
+
 ## Primeras aplicaciones
 
 ### Primera aplicación Spring "Hola Mundo"
