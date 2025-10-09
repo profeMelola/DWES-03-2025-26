@@ -13,7 +13,7 @@ Solo necesita una configuración básica, que permite el uso de librerías, inte
 
 <img width="400" height="250" alt="image" src="https://github.com/user-attachments/assets/fd3ec4ae-688e-4922-a787-bb57c6ce75a0" />
 
-<small>*Referencias: https://www.youtube.com/watch?v=8X2acANBuLk&t=857s , https://www.arquitecturajava.com/spring-boot-que-es/*</small>
+<pre>*Referencias: https://www.youtube.com/watch?v=8X2acANBuLk&t=857s , https://www.arquitecturajava.com/spring-boot-que-es/*</pre>
 
 ### Spring Platform
 
