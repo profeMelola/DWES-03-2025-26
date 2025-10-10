@@ -3,7 +3,7 @@
 Vamos a partir de la base de datos H2 usada en el ejercicio de [Productos JDBC](https://github.com/profeMelola/DWES-02-2025-26/tree/main/EJERCICIOS/JDBC/EJERCICIOS/Productos)
 
 
-Llama a tu proyecto **primerAPIRest**.
+Llama a tu proyecto **primerRestController**.
 
 Aprenderemos a:
 - Crear la entidad de persistencia Producto.
