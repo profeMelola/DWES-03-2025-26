@@ -59,7 +59,7 @@ src/
 | @Entity | Entidad de base de datos | Modelo |
 | @Configuration | Define beans/configuración | Configuración |
 
-[Ir a las anotaciones de Spring](./APOYO_TEORIA/spring-annotations.md)
+[Ir a las anotaciones de Spring](./APOYO_TEORIA/componentes-spring.md)
 
 ## Primeras aplicaciones
 
