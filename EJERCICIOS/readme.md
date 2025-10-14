@@ -1,4 +1,18 @@
-# EJERCICIO 1: RestController, CRUD de productos
+# EJERCICIO 1: SpringBootTutorial
+
+<img width="166" height="60" alt="image" src="https://github.com/user-attachments/assets/033e436e-e819-4966-9e1d-da886f7f5db1" />
+
+https://www.jetbrains.com/help/idea/spring-support-tutorial.html
+
+This tutorial guides you through steps that cover the following:
+
+- Add dependencies for JPA and H2 that enable your Spring application to store and retrieve relational data
+- Write and examine your code
+- Run your application and execute HTTP requests
+- Add Spring Boot Actuator for advanced health monitoring and endpoint analysis
+- Add Spring Boot Developer Tools for faster application updates
+
+# EJERCICIO 2: RestController, CRUD de productos
 
 Vamos a partir de la base de datos H2 usada en el ejercicio de [Productos JDBC](https://github.com/profeMelola/DWES-02-2025-26/tree/main/EJERCICIOS/JDBC/EJERCICIOS/Productos)
 
