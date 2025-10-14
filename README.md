@@ -59,6 +59,11 @@ src/
 | @Entity | Entidad de base de datos | Modelo |
 | @Configuration | Define beans/configuración | Configuración |
 
+Un **controlador REST** es una clase de Spring que recibe peticiones HTTP (GET, POST, PUT, DELETE, etc.) y devuelve datos (normalmente en formato JSON o XML).
+No devuelve vistas HTML, como haría un controlador tradicional (@Controller), sino respuestas de datos.
+
+Por eso es la base para construir un **API RESTful.**
+
 [Ir a las anotaciones de Spring](./APOYO_TEORIA/componentes-spring.md)
 
 ## Primeras aplicaciones
