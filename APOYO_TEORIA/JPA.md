@@ -1,4 +1,21 @@
-## Anotacons JPA más usadas en CRUD simples
+# JPA
+
+## Repositorios
+
+<img width="510" height="453" alt="imagen" src="https://github.com/user-attachments/assets/871e55da-9437-4393-bb74-4e0053a7ba7e" />
+
+```
+Repository<T, ID>
+ └── CrudRepository<T, ID>
+      └── PagingAndSortingRepository<T, ID>
+           └── JpaRepository<T, ID>
+
+```
+
+<img width="749" height="229" alt="imagen" src="https://github.com/user-attachments/assets/f3cc8cf7-3a4f-4a73-aeb4-ea4ab40dc2b0" />
+
+
+## Anotaciones JPA más usadas en CRUD simples
 
 | Anotación                                             | Descripción                                                                             | Ejemplo                                                       |
 | ----------------------------------------------------- | --------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
