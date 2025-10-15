@@ -27,6 +27,61 @@ Repository<T, ID>
 | `create-drop` | Igual que `create` (borra y crea al inicio)                     | **Borra todas las tablas al cerrar la app** | Tests o demos temporales        | ✅ Igual que `create` (H2 se borra al cerrar)     | 🧨 Borra todo al apagar la app            |
 
 
+### Ejemplo completo de application.properties
+
+```
+spring.application.name=spring-boot-tutorial2
+
+# Esto crea el archivo data/demo.mv.db en tu proyecto.
+#spring.datasource.url=jdbc:h2:file:./data/demo
+
+# ------------------------------------------------------------------------
+# URL de base de datos en memoria
+#spring.datasource.url=jdbc:h2:mem:testdb
+#spring.datasource.driverClassName=org.h2.Driver
+#spring.datasource.username=sa
+#spring.datasource.password=
+
+# ------------------------------------------------------------------------
+## Mostrar las sentencias SQL en consola
+#spring.jpa.show-sql=true
+
+## Activar consola web de H2
+#spring.h2.console.enabled=true
+#spring.h2.console.path=/h2-console
+
+# ------------------------------------------------------------------------
+## Dialecto de Hibernate
+# El lenguaje SQL es estándar, pero cada base de datos tiene sus propias variantes.
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+
+# ------------------------------------------------------------------------
+# Esta propiedad le indica a Hibernate (el ORM que usa Spring Data JPA)
+# qué debe hacer con el esquema de base de datos (tablas, relaciones, etc.) cada vez que arranca la aplicación.
+# Crea las tablas según las entidades
+spring.jpa.hibernate.ddl-auto=create-drop
+
+# ------------------------------------------------------------------------
+# Ejecuta scripts schema.sql y data.sql (por defecto: solo en BD embebidas)
+# garantiza que siempre se ejecuten los scripts, aunque la base de datos no sea embebida
+spring.sql.init.mode=ALWAYS
+spring.sql.init.encoding=UTF-8
+
+# ------------------------------------------------------------------------
+# Si quisieras personalizar el nombre o ubicación
+
+# schema.sql: antes de crear el esquema (crear tablas, índices...)
+# spring.sql.init.schema-locations=classpath:/db/schema.sql
+
+# data.sql: después de crear el esquema. Insertar datos iniciales o de prueba
+spring.sql.init.data-locations=classpath:/db/data.sql
+
+# Espera a que Hibernate cree las tablas, y solo después ejecuta los scripts SQL
+spring.jpa.defer-datasource-initialization=true
+```
+
+___
+
 ## Anotaciones JPA más usadas en CRUD simples
 
 | Anotación                                             | Descripción                                                                             | Ejemplo                                                       |
