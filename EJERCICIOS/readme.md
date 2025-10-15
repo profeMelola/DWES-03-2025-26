@@ -12,6 +12,15 @@ This tutorial guides you through steps that cover the following:
 - Add Spring Boot Actuator for advanced health monitoring and endpoint analysis
 - Add Spring Boot Developer Tools for faster application updates
 
+## Mejoras incorporadas en clase 
+
+- Estructurar el proyecto en paquetes.
+- Usar Lombok.
+- Usar DTO y servicio de mapeo entre DTO y Entity.
+- Usar ResponseEntity<T> como respuesta de los endpoints.
+- Usar MapStruct: herramienta que genera automáticamente el código de mapeo entre objetos, muy útil para convertir entre entidades JPA (Entity) y DTOs sin escribir código repetitivo.
+https://github.com/profeMelola/DWES-03-2025-26/blob/main/APOYO_TEORIA/Integracion_MapStruct_SpringBoot.md
+
 # EJERCICIO 2: RestController, CRUD de productos
 
 Vamos a partir de la base de datos H2 usada en el ejercicio de [Productos JDBC](https://github.com/profeMelola/DWES-02-2025-26/tree/main/EJERCICIOS/JDBC/EJERCICIOS/Productos)
