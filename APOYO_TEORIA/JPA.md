@@ -14,6 +14,18 @@ Repository<T, ID>
 
 <img width="749" height="229" alt="imagen" src="https://github.com/user-attachments/assets/f3cc8cf7-3a4f-4a73-aeb4-ea4ab40dc2b0" />
 
+## Configuración de H2
+
+### spring.jpa.hibernate.ddl-auto — Opciones y comportamiento
+
+| Valor         | Qué hace Hibernate al iniciar                                   | Qué hace al cerrar la app                   | Ideal para                      | Efecto en H2 **en memoria**                      | Efecto en H2 **persistente (en archivo)** |
+| :------------ | :-------------------------------------------------------------- | :------------------------------------------ | :------------------------------ | :----------------------------------------------- | :---------------------------------------- |
+| `none`        | No crea ni modifica tablas                                      | No borra nada                               | Producción con BD ya gestionada | ❌ Fallará (no existen tablas)                    | ✅ Usa las tablas existentes               |
+| `validate`    | Verifica que las tablas coincidan con las entidades             | No borra nada                               | Producción o integración        | ❌ Fallará (no existen tablas)                    | ✅ Verifica coherencia, no cambia nada     |
+| `update`      | Crea tablas si faltan o actualiza estructura (sin borrar datos) | No borra nada                               | Desarrollo con BD persistente   | ✅ Crea tablas nuevas en cada inicio (BD vacía)   | ✅ Mantiene datos entre reinicios          |
+| `create`      | Borra el esquema anterior y crea tablas nuevas                  | No borra nada                               | Desarrollo y pruebas manuales   | ✅ Crea todo en cada inicio (se pierde al cerrar) | ✅ Deja las tablas al reiniciar            |
+| `create-drop` | Igual que `create` (borra y crea al inicio)                     | **Borra todas las tablas al cerrar la app** | Tests o demos temporales        | ✅ Igual que `create` (H2 se borra al cerrar)     | 🧨 Borra todo al apagar la app            |
+
 
 ## Anotaciones JPA más usadas en CRUD simples
 
@@ -27,6 +39,15 @@ Repository<T, ID>
 | `@ManyToOne` / `@OneToMany`                           | Define relaciones entre entidades (foráneas o listas).                                  | `@ManyToOne @JoinColumn(name="rol_id")`            |
 | `@JoinColumn(name = "rol_id")`                        | Especifica la columna que actúa como clave foránea.                                     | `@JoinColumn(name="rol_id")`                          |
 
+| Escenario                                             | Recomendado         |
+| ----------------------------------------------------- | ------------------- |
+| Desarrollo con **H2 en memoria**                      | `create-drop`       |
+| Desarrollo con **H2 persistente** (archivo) o BD real | `update`            |
+| Producción                                            | `validate` o `none` |
+| Tests automatizados                                   | `create-drop`       |
+
+___
+
 ### Estrategias posibles de GenerationType
 
 | Estrategia | Descripción                                                                                                                                | Cuándo usarla                                                                                              |
@@ -36,6 +57,7 @@ Repository<T, ID>
 | `TABLE`    | Usa una **tabla auxiliar** que guarda los últimos valores de ID generados. Es portable pero más lenta.                                     | ⚙️ Opción genérica cuando no hay soporte nativo de secuencias ni autoincremento.                           |
 | `AUTO`     | Deja que JPA elija automáticamente la estrategia más adecuada según la base de datos.                                                      | 🔄 Opción por defecto, práctica para desarrollo inicial. Puede variar al cambiar de BD.                    |
 
+___
 
 ## Anotaciones principales de JPA
 
@@ -59,6 +81,8 @@ Repository<T, ID>
 | `@Embeddable`                                             | Indica una clase que puede ser embebida en otra entidad.                                     | `@Embeddable public class Direccion { ... }`       |
 | `@Embedded`                                               | Inserta los campos de una clase embebida dentro de una entidad.                              | `@Embedded private Direccion direccion;`           |
 | `@Version`                                                | Campo usado para control de versiones (optimistic locking).                                  | `@Version private int version;`                    |
+
+___
 
 ## Anotaciones principales de Spring Data JPA
 
