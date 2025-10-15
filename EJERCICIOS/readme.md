@@ -19,7 +19,7 @@ This tutorial guides you through steps that cover the following:
 - Usar DTO y servicio de mapeo entre DTO y Entity.
 - Usar ResponseEntity<T> como respuesta de los endpoints.
 - Usar MapStruct: herramienta que genera automáticamente el código de mapeo entre objetos, muy útil para convertir entre entidades JPA (Entity) y DTOs sin escribir código repetitivo.
-https://github.com/profeMelola/DWES-03-2025-26/blob/main/APOYO_TEORIA/Integracion_MapStruct_SpringBoot.md
+[Cómo integrar MapStruct en SpringBoot](https://github.com/profeMelola/DWES-03-2025-26/blob/main/APOYO_TEORIA/Integracion_MapStruct_SpringBoot.md)
 
 # EJERCICIO 2: RestController, CRUD de productos
 
