@@ -65,6 +65,78 @@ Aprenderemos a:
 
 Sigue las instrucciones del profesor...
 
+## Entidades JPA
+
+### Fabricante
+
+```
+@Entity
+@Table(name = "fabricante")
+public class Fabricante {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer codigo;
+
+    @Column(nullable = false, length = 255)
+    private String nombre;
+
+    // Relación 1:N con Producto
+    @OneToMany(mappedBy = "fabricante", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Producto> productos;
+
+}
+```
+
+| Anotación                                                                              | Descripción                                                                                           |
+| -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `@Entity`                                                                              | Indica que la clase es una **entidad JPA** y se mapeará a una tabla en la base de datos.              |
+| `@Table(name = "fabricante")`                                                          | Especifica el **nombre de la tabla**. Si no se indica, se usa el nombre de la clase.                  |
+| `@Id`                                                                                  | Marca el campo como **clave primaria**.                                                               |
+| `@GeneratedValue(strategy = GenerationType.IDENTITY)`                                  | Indica que el valor del ID se **autogenera por la base de datos** (autoincremental en H2).            |
+| `@Column(nullable = false, length = 255)`                                              | Define las restricciones de la columna (no nulo y longitud máxima).                                   |
+| `@OneToMany(mappedBy = "fabricante", cascade = CascadeType.ALL, orphanRemoval = true)` | Relación **uno a muchos**: un fabricante tiene muchos productos.                                      |
+| `mappedBy`                                                                             | Indica que el **lado propietario de la relación** está en la entidad `Producto` (campo `fabricante`). |
+| `cascade = CascadeType.ALL`                                                            | Propaga todas las operaciones (persist, remove, etc.) al conjunto de productos.                       |
+| `orphanRemoval = true`                                                                 | Si se elimina un producto de la lista, también se elimina en la base de datos.                        |
+
+
+### Producto
+
+```
+@Entity
+@Table(name = "producto")
+public class Producto {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer codigo;
+
+    @Column(nullable = false, length = 255)
+    private String nombre;
+
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal precio;
+
+    // Relación muchos a uno con Fabricante
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "codigo_fabricante", nullable = false)
+    private Fabricante fabricante;
+```
+
+| Anotación                                                   | Descripción                                                                                 |
+| ----------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `@Entity`                                                   | Indica que la clase representa una tabla en la BD.                                          |
+| `@Table(name = "producto")`                                 | Asocia la clase con la tabla `producto`.                                                    |
+| `@Id`                                                       | Define el campo `codigo` como **clave primaria**.                                           |
+| `@GeneratedValue(strategy = GenerationType.IDENTITY)`       | Hace que el ID sea **autogenerado** en la BD.                                               |
+| `@Column(nullable = false, length = 255)`                   | Define las restricciones del campo `nombre`.                                                |
+| `@Column(nullable = false, precision = 10, scale = 2)`      | Define el tipo decimal con 10 dígitos totales y 2 decimales, equivalente a `DECIMAL(10,2)`. |
+| `@ManyToOne(optional = false)`                              | Relación **muchos a uno** con `Fabricante`. Cada producto pertenece a un fabricante.        |
+| `@JoinColumn(name = "codigo_fabricante", nullable = false)` | Crea la **columna de clave foránea** (`codigo_fabricante`) y define que es obligatoria.     |
+
+--- 
+
 ## Ampliación: manejar excepciones
 
 **1. Crear un DTO para guardar información de errores:**
