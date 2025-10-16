@@ -195,6 +195,18 @@ http://localhost:8080/swagger-ui.html
 
 ---
 
+# MVC: web monolítica vs API Rest
+
+| Aspecto           | Web MVC monolítica           | API REST                                                    |
+| ----------------- | ---------------------------- | ----------------------------------------------------------- |
+| Tipo de respuesta | HTML renderizado             | JSON / XML                                                  |
+| Vista             | Plantillas (Thymeleaf, JSP)  | No hay (la vista la maneja el cliente, ej. React, Angular…) |
+| Controlador       | `@Controller`                | `@RestController`                                           |
+| Comunicación      | Navegador ↔️ Servidor (HTML) | Front-end / cliente ↔️ API (JSON)                           |
+| Patrón            | MVC completo                 | MVC sin “V” (a veces llamado **Model–Controller**)          |
+
+---
+
 # JWT
 
 https://www.jwt.io/
