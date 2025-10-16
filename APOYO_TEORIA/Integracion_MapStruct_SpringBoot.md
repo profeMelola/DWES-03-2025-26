@@ -86,6 +86,8 @@ public interface CustomerMapper {
 }
 ```
 
+**componentModel = "spring"** → Genera una implementación (CustomerMapperImpl) que sea un bean de Spring, para que pueda inyectarse automáticamente con @Autowired o mediante constructor
+
 ---
 
 ## ⚙️ 4. Uso en el controlador
@@ -127,7 +129,7 @@ public class CustomerController {
 
     @GetMapping
     public ResponseEntity<List<CustomerDTO>> getCustomers() {
-        List<CustomerDTO> list = ((List<Customer>) customerRepository.findAll())
+        List<CustomerDTO> list = customerRepository.findAll())
                 .stream()
                 .map(customerMapper::toDto)
                 .collect(Collectors.toList());
@@ -164,11 +166,20 @@ public interface CustomerMapper {
     @Mapping(source = "lastName", target = "apellido")
     CustomerDTO toDto(Customer entity);
 
+    @Mapping(source = "nombre", target = "firstName")
+    @Mapping(source = "apellido", target = "lastName")
     Customer toEntity(CustomerDTO dto);
+
 
     List<CustomerDTO> toDtoList(List<Customer> entities);
 }
 ```
+
+Toma el campo firstName de Customer → lo asigna al campo nombre en CustomerDTO.
+
+Toma lastName → lo asigna a apellido.
+
+Si los nombres fueran iguales, no haría falta escribir nada: MapStruct lo hace automáticamente.
 
 ---
 
@@ -178,6 +189,27 @@ public interface CustomerMapper {
 ✅ Rápido (sin reflexión, se ejecuta como código Java normal).  
 ✅ Errores detectables en tiempo de compilación.  
 ✅ Perfectamente integrable con Spring Boot.
+
+
+---
+
+## 7. Ahora aplica MapStruct en el ejercicio 1
+
+@Mapper(componentModel = "spring")
+public interface CustomerMapper {
+
+    // ✅ Entity → DTO
+    CustomerDTO toDto(Customer entity);
+
+    // ✅ DTO → Entity
+    Customer toEntity(CustomerDTO dto);
+
+    // ✅ Lista de entidades → lista de DTOs
+    List<CustomerDTO> toDtoList(List<Customer> entities);
+
+    // ✅ Lista de DTOs → lista de entidades
+    List<Customer> toEntityList(List<CustomerDTO> dtos);
+}
 
 ---
 
