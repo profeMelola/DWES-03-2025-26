@@ -16,10 +16,11 @@ This tutorial guides you through steps that cover the following:
 
 - Estructurar el proyecto en paquetes.
 - Usar Lombok.
-- Usar DTO y servicio de mapeo entre DTO y Entity.
+- Usar DTO.
+- Implementar un servicio de mapeo entre DTO y Entity.
 - Usar ResponseEntity<T> como respuesta de los endpoints.
-- Usar MapStruct: herramienta que genera automáticamente el código de mapeo entre objetos, muy útil para convertir entre entidades JPA (Entity) y DTOs sin escribir código repetitivo.
-[Cómo integrar MapStruct en SpringBoot](https://github.com/profeMelola/DWES-03-2025-26/blob/main/APOYO_TEORIA/Integracion_MapStruct_SpringBoot.md)
+- Usar JpaRepository.
+
 
 ---
 # Curiosidad: uso nativo de HttpServletRequest
@@ -136,8 +137,15 @@ public class Producto {
 | `@JoinColumn(name = "codigo_fabricante", nullable = false)` | Crea la **columna de clave foránea** (`codigo_fabricante`) y define que es obligatoria.     |
 
 --- 
+# AMPLIACIONES
 
-## Ampliación: manejar excepciones
+## Usar MapStruct
+Herramienta que genera automáticamente el código de mapeo entre objetos, muy útil para convertir entre entidades JPA (Entity) y DTOs sin escribir código repetitivo.
+[Cómo integrar MapStruct en SpringBoot](https://github.com/profeMelola/DWES-03-2025-26/blob/main/APOYO_TEORIA/Integracion_MapStruct_SpringBoot.md)
+
+---
+
+## manejar excepciones
 
 **1. Crear un DTO para guardar información de errores:**
 
@@ -205,7 +213,7 @@ public ResponseEntity<ErrorDTO> handleGenericException(Exception ex) {
 
 ___
 
-## Ampliación: validaciones
+## Validaciones
 
 Es necesario añadir la dependencia **Spring Boot Starter Validation (Bean Validation)**:
 
@@ -278,7 +286,7 @@ Ejemplo de otras validaciones:
 
 ___
 
-## Ampliación: configuración personalizada
+## Configuración personalizada
 
 Podemos añadir parámetros de configuración directamente en el archivo **application.properties**. Observa:
 
