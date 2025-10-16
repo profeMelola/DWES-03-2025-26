@@ -21,6 +21,13 @@ public class CustomerController {
 
     @PostMapping("/add")
     public ResponseEntity<CustomerDTO> addCustomer(@RequestBody CustomerDTO customerDTO) {
+        // El index.html funciona si llegan los parámetros como RequestParam
+        // application/x-www-form-urlencoded;charset=UTF-8
+        /*
+        There was an unexpected error (type=Unsupported Media Type, status=415).
+        Content-Type 'application/x-www-form-urlencoded;charset=UTF-8' is not supported.
+        org.springframework.web.HttpMediaTypeNotSupportedException: Content-Type 'application/x-www-form-urlencoded;charset=UTF-8' is not supported
+         */
     //public String addCustomer(@RequestParam String first, @RequestParam String last) {
         Customer customer = new Customer();
         customer.setFirstName(customerDTO.getFirstName());
@@ -85,18 +92,15 @@ public class CustomerController {
             return ResponseEntity.ok(customerDTO);
         }
         // Si pasa por aquí es que no lo ha encontrado!!!
+        // Forma 1: sin nada en el body del response
         //return ResponseEntity.notFound().build();
+
+        // Forma 2: devuelvo 404 con un json en el body
         // 404
         //return ResponseEntity.ok(null);
-        ErrorDTO errorDTO = new ErrorDTO("Que no existe torpedo!","666");
+        ErrorDTO errorDTO = new ErrorDTO("Que no existe este customer torpedo!","666");
 
-        //return ResponseEntity.notFound().body(errorDTO);
-
-        //return ResponseEntity.notFound().build();
-
-        return ResponseEntity.badRequest().body(errorDTO);
-
-        //return ResponseEntity.notFound(). //?????
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorDTO);
 
 
 
