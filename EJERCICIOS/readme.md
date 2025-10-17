@@ -20,6 +20,9 @@ This tutorial guides you through steps that cover the following:
 - Implementar un servicio de mapeo entre DTO y Entity.
 - Usar ResponseEntity<T> como respuesta de los endpoints.
 - Usar JpaRepository.
+- Cargar datos de prueba desde un script sql (data.sl).
+- Propiedades de configuración H2.
+  
 
 
 ---
