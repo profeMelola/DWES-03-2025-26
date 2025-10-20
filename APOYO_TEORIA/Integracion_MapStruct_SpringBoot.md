@@ -11,18 +11,19 @@ Agrega estas dependencias en tu archivo `pom.xml`:
 ```xml
 <dependencies>
     <!-- MapStruct -->
+    <!-- https://mvnrepository.com/artifact/org.mapstruct/mapstruct -->
     <dependency>
         <groupId>org.mapstruct</groupId>
         <artifactId>mapstruct</artifactId>
-        <version>1.6.2</version>
+        <version>1.5.5.Final</version>
     </dependency>
 
     <!-- Procesador de anotaciones (necesario para generar código) -->
+    <!-- https://mvnrepository.com/artifact/org.mapstruct/mapstruct-processor -->
     <dependency>
         <groupId>org.mapstruct</groupId>
         <artifactId>mapstruct-processor</artifactId>
-        <version>1.6.2</version>
-        <scope>provided</scope>
+        <version>1.5.5.Final</version>
     </dependency>
 </dependencies>
 
