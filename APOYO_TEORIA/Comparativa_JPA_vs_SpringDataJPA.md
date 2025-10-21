@@ -1,15 +1,15 @@
-# 🧩 Comparativa: JPA "puro" vs Spring Data JPA
+# Comparativa: JPA "puro" vs Spring Data JPA
 
-## 💡 Objetivo
+## Objetivo
 
 Comprender cómo **Spring Data JPA** simplifica el uso de **JPA
 estándar**, automatizando gran parte del código repetitivo.
 
 ------------------------------------------------------------------------
 
-## ⚙️ JPA "puro" (sin Spring)
+## JPA "puro" (sin Spring)
 
-### 📁 Estructura básica
+### Estructura básica
 
 ``` plaintext
 src/
@@ -17,7 +17,7 @@ src/
      └─ persistence.xml
 ```
 
-### 🧾 Archivo `persistence.xml`
+### Archivo `persistence.xml`
 
 ``` xml
 <persistence xmlns="https://jakarta.ee/xml/ns/persistence" version="3.0">
@@ -28,13 +28,13 @@ src/
       <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:mem:testdb"/>
       <property name="jakarta.persistence.jdbc.user" value="sa"/>
       <property name="jakarta.persistence.jdbc.password" value=""/>
-      <property name="jakarta.persistence.schema-generation.database.action" value="create"/>
+      <property name="jakarta.persistence.schema-generation.database.action" value="validate"/>
     </properties>
   </persistence-unit>
 </persistence>
 ```
 
-### 💻 Código típico
+### Código típico
 
 ``` java
 EntityManagerFactory emf = Persistence.createEntityManagerFactory("miUnidad");
@@ -53,7 +53,7 @@ em.close();
 emf.close();
 ```
 
-### 🔍 Características
+### Características
 
 -   Requiere `persistence.xml`.
 -   Se gestiona manualmente `EntityManager` y transacciones.
@@ -62,9 +62,9 @@ emf.close();
 
 ------------------------------------------------------------------------
 
-## 🌱 Spring Data JPA (con Spring Boot)
+## Spring Data JPA (con Spring Boot)
 
-### 📁 Configuración `application.properties`
+### Configuración `application.properties`
 
 ``` properties
 spring.datasource.url=jdbc:h2:mem:testdb
@@ -73,7 +73,7 @@ spring.jpa.hibernate.ddl-auto=create
 spring.jpa.show-sql=true
 ```
 
-### 🧩 Entidad JPA
+### Entidad JPA
 
 ``` java
 @Entity
@@ -87,7 +87,7 @@ public class Cliente {
 }
 ```
 
-### 🧠 Repositorio automático
+### Repositorio automático
 
 ``` java
 @Repository
@@ -96,7 +96,7 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 }
 ```
 
-### 💻 Uso en servicio o controlador
+### Uso en servicio o controlador
 
 ``` java
 @Service
@@ -114,7 +114,7 @@ public class ClienteService {
 }
 ```
 
-### 🚀 Características
+### Características
 
 -   No necesita `persistence.xml`.
 -   Spring crea y gestiona automáticamente el `EntityManager`.
@@ -124,42 +124,13 @@ public class ClienteService {
 
 ------------------------------------------------------------------------
 
-## 🧠 Conclusión
+# Ejemplo: comparativa entre persist y save
 
-  ------------------------------------------------------------------------
-  Aspecto            JPA "puro"              Spring Data JPA
-  ------------------ ----------------------- -----------------------------
-  Configuración      `persistence.xml`       `application.properties`
-
-  Creación de        Manual                  Automática
-  `EntityManager`                            
-
-  Transacciones      Manual (`begin/commit`) Automática (`@Transactional`)
-
-  Consultas básicas  JPQL manual             Generadas por nombre de
-                                             método
-
-  Flexibilidad       Alta (más control)      Alta (más productividad)
-
-  Código repetitivo  Mucho                   Mínimo
-
-  Ideal para         Aprender fundamentos    Desarrollo real en Spring
-                     JPA                     
-  ------------------------------------------------------------------------
-
-------------------------------------------------------------------------
-
-## 🧭 Recomendación docente
-
-1.  **Primero:** mostrar un ejemplo con JPA puro (entender
-    `EntityManager`, transacciones y consultas).\
-2.  **Después:** enseñar la versión con Spring Data JPA para apreciar la
-    simplificación.\
-3.  **Mensaje clave:**\
-    \> "Spring Data JPA no reemplaza JPA. La usa internamente y
-    automatiza su gestión."
-
-------------------------------------------------------------------------
-
-📘 *Autor: Profesora de Desarrollo Backend con Spring Framework*\
-✳️ *Curso: Aplicaciones empresariales con Spring Boot y JPA*
+| Característica                      | `persist()`                    | `save()`                               |
+| ----------------------------------- | ------------------------------ | -------------------------------------- |
+| ¿De qué API proviene?               | JPA (`EntityManager`)          | Spring Data JPA (`Repository`)         |
+| Inserta entidad nueva               | ✅ Sí                           | ✅ Sí (usa `persist()`)                 |
+| Actualiza entidad existente         | ❌ No                           | ✅ Sí (usa `merge()`)                   |
+| Devuelve la entidad guardada        | ❌ No                           | ✅ Sí                                   |
+| Lanza error si la entidad ya existe | ✅ Sí (`EntityExistsException`) | ❌ No, actualiza                        |
+| Necesita transacción explícita      | ✅ Sí (o `@Transactional`)      | No necesariamente (Spring la gestiona) |
