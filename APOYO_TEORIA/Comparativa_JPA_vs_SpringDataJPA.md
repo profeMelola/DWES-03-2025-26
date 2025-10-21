@@ -134,3 +134,69 @@ public class ClienteService {
 | Devuelve la entidad guardada        | ❌ No                           | ✅ Sí                                   |
 | Lanza error si la entidad ya existe | ✅ Sí (`EntityExistsException`) | ❌ No, actualiza                        |
 | Necesita transacción explícita      | ✅ Sí (o `@Transactional`)      | No necesariamente (Spring la gestiona) |
+
+---
+
+# Las 30 preguntas de entrevista sobre Spring Data JPA más comunes para las que deberías prepararte
+
+https://www.vervecopilot.com/es/preguntas-de-entrevista/las-30-preguntas-de-entrevista-sobre-spring-data-jpa-m%C3%A1s-comunes-para-las-que-deber%C3%ADas-prepararte
+
+¿Qué es Spring Data JPA?
+
+¿Qué es JPA y por qué lo usan los programadores?
+
+¿Cuáles son las interfaces clave en Spring Data JPA?
+
+¿Cómo funciona la generación de consultas por nombre de método en Spring Data JPA?
+
+¿Cuáles son las ventajas de usar JPA?
+
+¿Qué es una Entidad en JPA?
+
+¿Cuál es la diferencia entre EntityManager y Repository en Spring Data JPA?
+
+¿Qué es el contexto de persistencia?
+
+¿Cuál es la diferencia entre save() y saveAndFlush()?
+
+¿Cuál es la diferencia entre JPQL y SQL?
+
+¿Cuáles son los diferentes tipos de relaciones en JPA?
+
+¿Qué es la carga diferida (lazy loading) y la carga inmediata (eager loading)?
+
+¿Cuál es la diferencia entre @Query y los métodos de consulta derivados?
+
+¿Cuál es el uso de la anotación @Modifying?
+
+¿Cómo se gestionan las transacciones en Spring Data JPA?
+
+¿Cuál es el tipo de carga (fetch type) predeterminado para @ManyToOne y @OneToMany?
+
+¿Qué es una clave primaria compuesta y cómo se define?
+
+¿Cuál es la diferencia entre @Entity y @Table?
+
+¿Cuál es el papel de EntityManager en JPA?
+
+¿Cómo se implementan la paginación y la ordenación en Spring Data JPA?
+
+¿Puede Spring Data JPA manejar consultas SQL nativas?
+
+¿Cómo admite Spring Data JPA la auditoría?
+
+¿Qué es la cascada (cascading) en JPA?
+
+¿Cuál es la diferencia entre los métodos persist() y merge() de EntityManager?
+
+¿Qué es el problema de select N+1 en JPA?
+
+¿Cómo se escriben implementaciones personalizadas de repositorios en Spring Data JPA?
+
+¿Qué es el bloqueo optimista (optimistic locking) en JPA?
+
+¿Qué anotaciones se utilizan para mapear columnas de base de datos en JPA?
+
+¿Cuál es la diferencia entre flush() y commit() en JPA?
+
+¿Cómo se manejan las excepciones en Spring Data JPA?
