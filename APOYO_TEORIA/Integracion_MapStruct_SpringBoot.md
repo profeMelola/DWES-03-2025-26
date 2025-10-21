@@ -194,25 +194,5 @@ Si los nombres fueran iguales, no haría falta escribir nada: MapStruct lo hace 
 
 ---
 
-## 7. Ahora aplica MapStruct en el ejercicio 1
-
-@Mapper(componentModel = "spring")
-public interface CustomerMapper {
-
-    // ✅ Entity → DTO
-    CustomerDTO toDto(Customer entity);
-
-    // ✅ DTO → Entity
-    Customer toEntity(CustomerDTO dto);
-
-    // ✅ Lista de entidades → lista de DTOs
-    List<CustomerDTO> toDtoList(List<Customer> entities);
-
-    // ✅ Lista de DTOs → lista de entidades
-    List<Customer> toEntityList(List<CustomerDTO> dtos);
-}
-
----
-
 📚 **Referencia oficial:**  
 👉 [https://mapstruct.org/](https://mapstruct.org/)

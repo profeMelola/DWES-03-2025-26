@@ -149,8 +149,22 @@ Herramienta que genera automáticamente el código de mapeo entre objetos, muy �
 [Cómo integrar MapStruct en SpringBoot](https://github.com/profeMelola/DWES-03-2025-26/blob/main/APOYO_TEORIA/Integracion_MapStruct_SpringBoot.md)
 
 ---
+## Especificaciones de los endpoints
 
-## manejar excepciones
+- Todos los endpoints devuelven ResponseEntity.
+- Usa DTOs para comunicarte con el exterior (nunca expongas las entidades).
+
+| Método     | Endpoint              | Descripción                             | Request Body                             | Response                  | Código HTTP                        |
+| ---------- | --------------------- | --------------------------------------- | ---------------------------------------- | ------------------------- | ---------------------------------- |
+| **POST**   | `/api/productos`      | Crea un nuevo producto                  | `ProductoDTO` (nombre, precio, cantidad) | `ProductoDTO` creado      | `201 Created`                      |
+| **GET**    | `/api/productos`      | Obtiene la lista de todos los productos | —                                        | `List<ProductoDTO>`       | `200 OK`                           |
+| **GET**    | `/api/productos/{id}` | Obtiene un producto por su ID           | —                                        | `ProductoDTO`             | `200 OK` o `404 Not Found`         |
+| **PUT**    | `/api/productos/{id}` | Actualiza un producto existente         | `ProductoDTO`                            | `ProductoDTO` actualizado | `200 OK` o `404 Not Found`         |
+| **DELETE** | `/api/productos/{id}` | Elimina un producto existente           | —                                        | —                         | `204 No Content` o `404 Not Found` |
+
+---
+
+## Manejar excepciones
 
 **1. Crear un DTO para guardar información de errores:**
 
