@@ -74,6 +74,18 @@ https://www.jetbrains.com/help/idea/your-first-spring-application.html
 ### Segunda aplicación Spring
 https://www.jetbrains.com/help/idea/spring-support-tutorial.html
 
+
+## Apoyo teoría
+
+- [Api REST](./APOYO_TEORIA/API-REST.md) 
+- [Anotaciones Servicio y Controlador](./APOYO_TEORIA/Anotaciones-Servicio-Controlador.md)
+- [JPA](./APOYO_TEORIA/JPA.md)
+      - [Comparativa entre JPA y SpringDataJPA](./APOYO_TEORIA/Comparativa_JPA_vs_SpringDataJPA.md)
+      - [Asociaciones](./APOYO_TEORIA/JPA-%20Asociaciones.md)
+      - [Paginación](./APOYO_TEORIA/Pageable.md)
+      - [JPA Avanzado](./APOYO_TEORIA/findAll_Example_QBE.md)
+- [Thymeleaf](./APOYO_TEORIA/Thymeleaf.md)
+
 ## Webs de referencia
 
 https://spring.io/

@@ -1,3 +1,13 @@
+![alt text](image-7.png)
+
+https://www.thymeleaf.org/
+
+Thymeleaf es un motor de plantillas Java para crear aplicaciones web y autónomas, que genera páginas HTML dinámicas a partir de plantillas. 
+
+Permite integrar fácilmente el código Java con el marcado HTML, gracias a su diseño "natural" que hace que las plantillas se puedan visualizar en un navegador sin procesar, funcionando como prototipos estáticos. 
+
+Su principal uso es en el desarrollo web basado en el patrón Modelo-Vista-Controlador (MVC), especialmente con el framework Spring, donde reemplaza a tecnologías como JSP. 
+
 # 1. Sintaxis básica de Thymeleaf
 
 La principal diferencia entre Thymeleaf y el HTML estándar es el uso de atributos especiales que Thymeleaf interpreta y reemplaza cuando procesa el archivo. 
