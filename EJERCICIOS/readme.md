@@ -156,11 +156,11 @@ Herramienta que genera automáticamente el código de mapeo entre objetos, muy �
 
 | Método     | Endpoint              | Descripción                             | Request Body                             | Response                  | Código HTTP                        |
 | ---------- | --------------------- | --------------------------------------- | ---------------------------------------- | ------------------------- | ---------------------------------- |
-| **POST**   | `/api/productos`      | Crea un nuevo producto                  | `ProductoDTO` (nombre, precio, cantidad) | `ProductoDTO` creado      | `201 Created`                      |
+| **POST**   | `/api/productos`      | Crea un nuevo producto                  | `ProductoDTO` (codigo,nombre, precio) | `ProductoDTO` creado      | `201 Created`                      |
 | **GET**    | `/api/productos`      | Obtiene la lista de todos los productos | —                                        | `List<ProductoDTO>`       | `200 OK`                           |
-| **GET**    | `/api/productos/{id}` | Obtiene un producto por su ID           | —                                        | `ProductoDTO`             | `200 OK` o `404 Not Found`         |
-| **PUT**    | `/api/productos/{id}` | Actualiza un producto existente         | `ProductoDTO`                            | `ProductoDTO` actualizado | `200 OK` o `404 Not Found`         |
-| **DELETE** | `/api/productos/{id}` | Elimina un producto existente           | —                                        | —                         | `204 No Content` o `404 Not Found` |
+| **GET**    | `/api/productos/{codigo}` | Obtiene un producto por su código           | —                                        | `ProductoDTO`             | `200 OK` o `404 Not Found`         |
+| **PUT**    | `/api/productos/{codigo}` | Actualiza un producto existente         | `ProductoDTO`                            | `ProductoDTO` actualizado | `200 OK` o `404 Not Found`         |
+| **DELETE** | `/api/productos/{codigo}` | Elimina un producto existente           | —                                        | —                         | `204 No Content` o `404 Not Found` |
 
 ---
 
