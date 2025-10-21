@@ -69,6 +69,8 @@ Aprenderemos a:
 
 Sigue las instrucciones del profesor...
 
+[¿Qué es un API Rest?](.././APOYO_TEORIA/API-REST.md)
+
 ## Entidades JPA
 
 ### Fabricante
