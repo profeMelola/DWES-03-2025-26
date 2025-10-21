@@ -162,6 +162,31 @@ Herramienta que genera automáticamente el código de mapeo entre objetos, muy �
 | **PUT**    | `/api/productos/{codigo}` | Actualiza un producto existente         | `ProductoDTO`                            | `ProductoDTO` actualizado | `200 OK` o `404 Not Found`         |
 | **DELETE** | `/api/productos/{codigo}` | Elimina un producto existente           | —                                        | —                         | `204 No Content` o `404 Not Found` |
 
+
+En tu entidad Producto, el campo fabricante es obligatorio (optional = false), por lo que el DTO debe incluirlo de alguna forma en el POST /api/productos:
+
+```
+@Data
+public class ProductoDTO {
+    private String codigo;
+    private String nombre;
+    private BigDecimal precio;
+    private Integer fabricanteId; // ← nuevo campo
+}
+
+```
+
+Ejemplo de JSON de entrada:
+
+```
+{
+  "codigo": "A001",
+  "nombre": "Teclado mecánico",
+  "precio": 59.99,
+  "fabricanteId": 3
+}
+
+```
 ---
 
 ## Manejar excepciones
@@ -443,3 +468,40 @@ public class DawController {
 }
 ```
 
+---
+
+## Cambios en los DTO
+
+### Incluir un objeto anidado simple
+
+```
+@Data
+public class ProductoDTO {
+    private String codigo;
+    private String nombre;
+    private BigDecimal precio;
+    private FabricanteDTO fabricante;
+}
+
+```
+
+### Dos DTO separados para entrada y salida
+
+```
+@Data
+public class ProductoCreateDTO {
+    private String codigo;
+    private String nombre;
+    private BigDecimal precio;
+    private Integer fabricanteId;
+}
+
+@Data
+public class ProductoDTO {
+    private String codigo;
+    private String nombre;
+    private BigDecimal precio;
+    private String nombreFabricante;
+}
+
+```
