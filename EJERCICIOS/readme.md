@@ -171,7 +171,7 @@ public class ProductoDTO {
     private String codigo;
     private String nombre;
     private BigDecimal precio;
-    private Integer fabricanteId; // ← nuevo campo
+    private Integer codigoFabricante; // ← nuevo campo
 }
 
 ```
@@ -183,7 +183,7 @@ Ejemplo de JSON de entrada:
   "codigo": "A001",
   "nombre": "Teclado mecánico",
   "precio": 59.99,
-  "fabricanteId": 3
+  "codigoFabricante": 3
 }
 
 ```
