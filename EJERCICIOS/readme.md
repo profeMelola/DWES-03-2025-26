@@ -510,3 +510,18 @@ public class ProductoDTO {
 }
 
 ```
+
+---
+
+# Añadir Autenticación y Autorización
+
+JWT (JSON Web Token) es un estándar para la creación de tokens de acceso. 
+
+Se utiliza principalmente para autenticación y autorización.
+
+**Funcionamiento:**
+
+- Autenticación: El usuario se autentica ingresando sus credenciales.
+- Generación: El servidor genera un JWT y lo devuelve al cliente.
+- Autorización: El cliente envía el JWT en las solicitudes subsecuentes para acceder a recursos protegidos.
+- Verificación: El servidor verifica el JWT antes de conceder acceso.
