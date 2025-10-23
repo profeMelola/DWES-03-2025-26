@@ -259,7 +259,12 @@ ___
 
 ## Validaciones
 
-Es necesario añadir la dependencia **Spring Boot Starter Validation (Bean Validation)**:
+Es necesario añadir la dependencia **Spring Boot Starter Validation (Bean Validation)**.
+
+Añadimos desde el pom.xml -> add starter...
+
+Buscamos Validation y automáticamente aparecerá la dependencia:
+
 
 ```
         <dependency>
