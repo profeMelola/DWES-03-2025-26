@@ -1,8 +1,10 @@
 package es.daw.productoapirest.service;
 
 import es.daw.productoapirest.dto.ProductoDTO;
+import es.daw.productoapirest.entity.Fabricante;
 import es.daw.productoapirest.entity.Producto;
 import es.daw.productoapirest.mapper.ProductoMapper;
+import es.daw.productoapirest.repository.FabricanteRepository;
 import es.daw.productoapirest.repository.ProductoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +31,10 @@ public class ProductoService {
     // ya que están listadas explícitamente en la firma del constructor. Esto evita confusión sobre cómo y cuándo se inicializan.
 
     private final ProductoRepository productoRepository;
+    private final FabricanteRepository fabricanteRepository;
     private final ProductoMapper productoMapper;
 
-    // No es necesario el constructor con @Autowired gracias a @RequiredArgsConstructor
+//    // No es necesario el constructor con @Autowired gracias a @RequiredArgsConstructor
 //    @Autowired
 //    public ProductoService(ProductoRepository productoRepository, ProductoMapper productoMapper) {
 //        this.productoRepository = productoRepository;
@@ -55,22 +58,51 @@ public class ProductoService {
         return Optional.empty();
     }
 
+    /**
+     * Dar de alta producto en la BD
+     * @param productoDTO
+     * @return
+     */
     public Optional<ProductoDTO> crearProducto(ProductoDTO productoDTO) {
         // Convertir DTO a entidad
         Producto productoEntity = productoMapper.toEntity(productoDTO);
+
+        // Asignar por defecto el fabricante cuyo código es 1 ...
+        //Optional<Fabricante> fabOpt = fabricanteRepository.findById(1);
+        Optional<Fabricante> fabOpt = fabricanteRepository.findById(productoDTO.getCodigoFabricante());
+        if (fabOpt.isPresent()) {
+            productoEntity.setFabricante(fabOpt.get());
+        }else{
+            return Optional.empty(); // si no encuentra el fabricante devuelve un optional vacío
+        }
 
         // Guardar la entidad en la base de datos
         Producto productoGuardado = productoRepository.save(productoEntity);
         //productoRepository.save(productoEntity);
 
-
-
         // Convertir la entidad guardada de vuelta a DTO
-        Optional<ProductoDTO> dto = productoMapper.toDto(productoGuardado);
+        ProductoDTO dto = productoMapper.toDto(productoGuardado);
 
-        // PARA EL VIERNES 24 DE OCTUBRE........
+        return Optional.of(dto);
 
     }
 
+    public boolean deleteByCodigo(String codigo) {
+    //public void deleteByCodigo(String codigo) {
+        //productoRepository.deleteProductoByCodigo(codigo);
+        productoRepository.deleteById(productoRepository.findByCodigo(codigo).get().getId());
+
+        // 2 respuestas diferentes.... si el producto existe...
+        Optional<Producto> productoEntity = productoRepository.findByCodigo(codigo);
+        if (productoEntity.isPresent()) {
+            productoRepository.deleteById(productoEntity.get().getId());
+            return true;
+        }
+
+        // PARA EL LUNES 27 OCTUBRE... ProductoNotFoundException!!!
+        return false;
+
+
+    }
 
 }

@@ -9,4 +9,6 @@ import java.util.Optional;
 @Repository
 public interface ProductoRepository extends JpaRepository<Producto,Integer> {
     Optional<Producto> findByCodigo(String codigo);
+
+    //void deleteProductoByCodigo(String codigo);
 }

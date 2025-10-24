@@ -3,8 +3,11 @@ package es.daw.productoapirest.controller;
 import es.daw.productoapirest.dto.ProductoDTO;
 import es.daw.productoapirest.repository.ProductoRepository;
 import es.daw.productoapirest.service.ProductoService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,7 +45,9 @@ public class ProductoController {
 
     // Encontrar producto por código
     @GetMapping("/{codigo}")
-    public ResponseEntity<ProductoDTO> findByCodigo(@PathVariable String codigo) {
+    public ResponseEntity<ProductoDTO> findByCodigo(
+            @Pattern(regexp = "^[0-9]{3}[A-Z]$",message="El código debe tener 3 digitos + 1 letra May")
+                                                        @PathVariable String codigo) {
         Optional<ProductoDTO> prodDTO = productoService.findByCodigo(codigo);
         if (prodDTO.isPresent()) {
             return ResponseEntity.ok(prodDTO.get()); //200
@@ -52,12 +57,24 @@ public class ProductoController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductoDTO> crearProducto(@RequestBody ProductoDTO productoDTO) {
+    public ResponseEntity<ProductoDTO> save(@Valid @RequestBody ProductoDTO productoDTO) {
         // Cuando se da de alta un producto siempre pertenece al fabricante con id 1
-        ProductoDTO creado = productoService.crearProducto(productoDTO);
+        Optional<ProductoDTO> creado = productoService.crearProducto(productoDTO);
 
-        // PARA EL VIERNES 24 DE OCTUBRE........
+        if  (creado.isPresent()) {
+            //return ResponseEntity.ok(creado.get()); // 200
+            return ResponseEntity.status(HttpStatus.CREATED).body(creado.get());
+        }
+        return ResponseEntity.notFound().build();  //no encontrado.... es el fabricante
 
+    }
+
+    @DeleteMapping("/{codigo}")
+    public ResponseEntity<Void> delete(@PathVariable String codigo) {
+        // PENDIENTE VALIDACIONES... 3 DÍGITOS Y UNA LETRA AL FINAL...
+        if (productoService.deleteByCodigo(codigo))
+            return ResponseEntity.noContent().build();
+        return ResponseEntity.notFound().build();
     }
 
 
