@@ -70,11 +70,25 @@ public class ProductoController {
     }
 
     @DeleteMapping("/{codigo}")
-    public ResponseEntity<Void> delete(@PathVariable String codigo) {
-        // PENDIENTE VALIDACIONES... 3 DÍGITOS Y UNA LETRA AL FINAL...
-        if (productoService.deleteByCodigo(codigo))
-            return ResponseEntity.noContent().build();
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<Void> delete(@PathVariable
+        @Pattern(
+                regexp = "^[0-9]{3}[A-Z]$",
+                message="El código debe empezar por 3 dígitos seguido de una letra mayúscula"
+        )
+        String codigo
+    ) {
+        if (productoService.deleteByCodigo(codigo)) {
+            System.out.println("************* BORRADO ************");
+            return ResponseEntity.noContent().build();//204, ok
+        }
+        System.out.println("*************** NO BORRA ************");
+        return ResponseEntity.notFound().build(); //404
+    }
+
+    @GetMapping("/parse-int")
+    public String parseInteger(@RequestParam(name = "numero",defaultValue = "666") String number) {
+        int parsedNumber = Integer.parseInt(number); // Puede lanzar NumberFormatException
+        return "Parsed number: " + parsedNumber;
     }
 
 

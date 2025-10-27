@@ -3,6 +3,7 @@ package es.daw.productoapirest.controller;
 import es.daw.productoapirest.dto.ProductoDTO;
 import es.daw.productoapirest.repository.ProductoRepository;
 import es.daw.productoapirest.service.ProductoService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -53,7 +54,7 @@ public class ProductoController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductoDTO> create(@RequestBody ProductoDTO productoDTO) {
+    public ResponseEntity<ProductoDTO> create(@Valid @RequestBody ProductoDTO productoDTO) {
         Optional<ProductoDTO> dto = productoService.create(productoDTO);
         if (dto.isPresent()) {
             //return ResponseEntity.ok(dto.get()); // 200
@@ -64,6 +65,14 @@ public class ProductoController {
         }
     }
 
+
+    @DeleteMapping("/{codigo}")
+    public ResponseEntity<Void> delete(@PathVariable String codigo) {
+        if (productoService.deleteByCodigo(codigo))
+            return ResponseEntity.noContent().build(); // 204... ok!
+
+        return ResponseEntity.notFound().build(); // 404
+    }
 
 
 }

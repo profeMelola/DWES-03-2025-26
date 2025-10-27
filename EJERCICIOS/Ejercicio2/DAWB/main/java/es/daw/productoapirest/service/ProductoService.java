@@ -73,6 +73,21 @@ public class ProductoService {
 
     }
 
+    public boolean deleteByCodigo(String codigo){
+        Optional<Producto> productoEntity = productoRepository.findByCodigo(codigo);
+        if (productoEntity.isPresent()){
+            //productoRepository.delete(productoEntity.get()); //borrar por entity completo
+            productoRepository.deleteById(productoEntity.get().getId());
+            // devolver un 204
+            return true;
+        }
+
+        // PENDIENTE!!! Lanzar excepción propia ProductoNotFoundException
+        // El mensaje: El producto con código XXX no existe en la BD
+        return false; // devolver un 404
+
+
+    }
 
 
 

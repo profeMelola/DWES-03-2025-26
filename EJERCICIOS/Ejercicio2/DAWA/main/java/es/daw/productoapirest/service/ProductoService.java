@@ -90,7 +90,7 @@ public class ProductoService {
     public boolean deleteByCodigo(String codigo) {
     //public void deleteByCodigo(String codigo) {
         //productoRepository.deleteProductoByCodigo(codigo);
-        productoRepository.deleteById(productoRepository.findByCodigo(codigo).get().getId());
+        //productoRepository.deleteById(productoRepository.findByCodigo(codigo).get().getId());
 
         // 2 respuestas diferentes.... si el producto existe...
         Optional<Producto> productoEntity = productoRepository.findByCodigo(codigo);
@@ -98,8 +98,8 @@ public class ProductoService {
             productoRepository.deleteById(productoEntity.get().getId());
             return true;
         }
-
-        // PARA EL LUNES 27 OCTUBRE... ProductoNotFoundException!!!
+        // El producto con código XXXX no existe en la BD
+        // lanzar excepción propia ProductoNotFoundException
         return false;
 
 

@@ -1,5 +1,6 @@
 package es.daw.productoapirest.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -16,5 +17,8 @@ public class ProductoDTO {
     private BigDecimal precio;
     @Size(min = 4, max = 4, message = "El codigo debe tener exactamente 4 caracteres")
     private String codigo;
+
+    // Solo se usa esta propieda al crear un producto, o se devuelve al listar
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Integer codigoFabricante;
 }
