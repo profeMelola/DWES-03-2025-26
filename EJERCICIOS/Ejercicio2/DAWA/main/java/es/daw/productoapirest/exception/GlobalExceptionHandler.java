@@ -1,0 +1,86 @@
+package es.daw.productoapirest.exception;
+
+import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@ControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<ErrorDTO> handleConstraintViolationException(ConstraintViolationException ex) {
+        ErrorDTO errorDTO = new ErrorDTO();
+        errorDTO.setMessage("Error de constraint violation!");
+        errorDTO.setTimestamp(LocalDateTime.now());
+
+        Map<String,String> error = new HashMap<>();
+        error.put(ex.getConstraintName(), ex.getErrorMessage());
+        errorDTO.setDetails(error);
+
+        return new ResponseEntity<>(errorDTO,HttpStatus.BAD_REQUEST);
+
+    }
+
+    //@ExceptionHandler({MethodArgumentNotValidException.class,ConstraintViolationException.class})
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorDTO> handleException(MethodArgumentNotValidException ex) {
+
+//        List<String> errores = ex.getBindingResult()
+//                .getFieldErrors()
+//                .stream()
+//                .map( error -> error.getField() +": "+error.getDefaultMessage())
+//                .toList();
+
+        Map<String, String> errores = new HashMap<>();
+        for (FieldError e : ex.getBindingResult().getFieldErrors()){
+            errores.put(e.getField(), e.getDefaultMessage());
+        }
+        ErrorDTO errorDTO = new ErrorDTO(
+                "Error de validación",
+                LocalDateTime.now(),
+                errores
+                //String.join("; ", errores)
+        );
+
+        // Devolvemos un error 400
+        //return new ResponseEntity<>(errorDTO, HttpStatus.BAD_REQUEST);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorDTO);
+
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorDTO> handleGenericException(Exception ex) {
+        ErrorDTO errorDTO = new ErrorDTO();
+        errorDTO.setMessage("Pedazo de error genérico");
+        errorDTO.setTimestamp(LocalDateTime.now());
+        //errorDTO.setDetails(new HashMap<>());
+
+        Map<String,String> errores = new HashMap<>();
+        errores.put("message", ex.getMessage());
+
+        errorDTO.setDetails(errores);
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorDTO);
+    }
+
+    @ExceptionHandler(NumberFormatException.class)
+    public ResponseEntity<ErrorDTO> handleNumberFormatException(NumberFormatException ex) {
+        ErrorDTO errorDTO = new ErrorDTO();
+        errorDTO.setTimestamp(LocalDateTime.now());
+        errorDTO.setMessage("Invalid number format... torpedo!");
+        errorDTO.setDetails(new HashMap<>());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorDTO);
+    }
+
+
+}
