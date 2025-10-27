@@ -14,7 +14,7 @@ Estas son las funcionalidades que debes implementar:
 Se proporciona los siguientes fuentes que no debes modificar:
 
 - Los entities del modelo.
-- El recurso import.sql para para tener datos iniciales.
+- El recurso data.sql para para tener datos iniciales.
 
 ---
 
