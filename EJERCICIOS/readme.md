@@ -275,7 +275,8 @@ Buscamos Validation y automáticamente aparecerá la dependencia:
 
 Estas son las anotaciones más comunes:
 
-![image](https://github.com/user-attachments/assets/fbe1bbbe-2f6c-4fa9-8ebf-b2208e6f48f5)
+<img width="827" height="720" alt="imagen" src="https://github.com/user-attachments/assets/883b9c6d-bbe4-4b86-8e99-70b617f32f0d" />
+
 
 
 Vamos a añadir validaciones automáticas a ProductoDTO:
