@@ -2,6 +2,9 @@
 
 Un Comparator define la forma de comparar dos objetos para ordenarlos.
 
+<img width="194" height="132" alt="imagen" src="https://github.com/user-attachments/assets/466b35b2-4934-497f-a0fb-80908cd28e41" />
+
+
 ```
 @FunctionalInterface
 public interface Comparator<T> {
