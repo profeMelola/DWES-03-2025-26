@@ -14,9 +14,30 @@ Más información [Programación Funcional](https://github.com/profeMelola/DWES-
 ---
 ## Con qué clases se usa?
 
-Principalmente con colecciones Set y List.
+Principalmente con colecciones **Set y List.**
 
 <img width="828" height="581" alt="imagen" src="https://github.com/user-attachments/assets/d8923865-bd86-413e-a345-b9eeaa286185" />
+
+El API Stream también se usa con **Java NIO**, de hecho, NIO.2 (desde Java 8) incorpora métodos que devuelven Streams, lo cual permite procesar archivos y directorios de forma funcional, igual que con colecciones.
+
+| Fuente del Stream      | Método NIO                           | Tipo de Stream devuelto |
+| ---------------------- | ------------------------------------ | ----------------------- |
+| Directorio             | `Files.list(Path)`                   | `Stream<Path>`          |
+| Directorios recursivos | `Files.walk(Path)`                   | `Stream<Path>`          |
+| Líneas de texto        | `Files.lines(Path)`                  | `Stream<String>`        |
+| Archivo grande         | `Files.find(Path, int, BiPredicate)` | `Stream<Path>`          |
+
+
+### ¿De dónde vienen los Streams?
+
+| Fuente                         | Ejemplo                                 | Tipo de Stream   |
+| ------------------------------ | --------------------------------------- | ---------------- |
+| Colecciones                    | `lista.stream()`                        | `Stream<T>`      |
+| Arrays                         | `Arrays.stream(array)`                  | `Stream<T>`      |
+| Generadores                    | `Stream.of(...)`, `Stream.iterate(...)` | `Stream<T>`      |
+| **Java NIO (ficheros)**        | `Files.list(Path)`                      | `Stream<Path>`   |
+| **Java NIO (líneas de texto)** | `Files.lines(Path)`                     | `Stream<String>` |
+
 
 
 ---
@@ -81,4 +102,71 @@ List<Integer> transactionsIds =
 <img width="831" height="724" alt="imagen" src="https://github.com/user-attachments/assets/f7d46283-f39e-4e22-bf89-7f208a430291" />
 
 
+---
 
+## Java NIO y el API Stream
+
+### Listar archivos de un directorio
+
+
+Con File y bucles:
+
+
+```
+File carpeta = new File("src");
+for (File f : carpeta.listFiles()) {
+    System.out.println(f.getName());
+}
+
+```
+
+Con NIO + Stream:
+
+
+```
+import java.nio.file.*;
+import java.io.IOException;
+
+public class EjemploNIO1 {
+    public static void main(String[] args) throws IOException {
+        Files.list(Path.of("src"))
+             .forEach(System.out::println);
+    }
+}
+
+```
+
+### Listar todos los archivos (incluso subcarpetas)
+
+
+```
+Files.walk(Path.of("src"))
+     .forEach(System.out::println);
+
+```
+
+### Filtrar archivos
+
+
+```
+Files.walk(Path.of("src"))
+     .filter(p -> p.toString().endsWith(".java"))
+     .forEach(System.out::println);
+
+```
+
+### Leer líneas d eun fichero
+
+
+```
+Path ruta = Path.of("src/ejemplo.txt");
+
+Files.lines(ruta)
+     .forEach(System.out::println);
+
+Files.lines(Path.of("datos.txt"))
+     .filter(linea -> linea.contains("error"))
+     .forEach(System.out::println);
+
+
+```
