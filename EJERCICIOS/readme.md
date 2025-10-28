@@ -255,6 +255,26 @@ public ResponseEntity<ErrorDTO> handleGenericException(Exception ex) {
 
 ```
 
+**Otra forma más simple: **
+```
+@ResponseStatus(HttpStatus.BAD_REQUEST)
+@ExceptionHandler(MethodArgumentNotValidException.class)
+public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
+    Map<String, String> errors = new HashMap<>();
+    ex.getBindingResult().getAllErrors().forEach((error) -> {
+        String fieldName = ((FieldError) error).getField();
+        String errorMessage = error.getDefaultMessage();
+        errors.put(fieldName, errorMessage);
+    });
+    return errors;
+}
+
+``` 
+
+- @ResponseStatus(HttpStatus.BAD_REQUEST) evita tener que crear el ResponseEntity explícitamente.
+- Spring convierte automáticamente el Map en JSON.
+- No puedo incluir mis metadatos..
+- Menos profesional para un api pública (Swagger/OpenAI)
 ___
 
 ## Validaciones
