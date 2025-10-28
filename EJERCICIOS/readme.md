@@ -478,6 +478,44 @@ public class DawController {
 
 ---
 
+## Versionado de la API
+
+Es una buena práctica que realicemos el versionado de la API, El versionado de una API es fundamental para garantizar la estabilidad, la evolución controlada y la compatibilidad hacia atrás. 
+
+Proporciona un marco para gestionar los cambios en la API de manera efectiva y permite una comunicación y colaboración más fluidas con los usuarios. 
+
+Podemos hacerlo desde el fichero properties añadiendo la clave y recuperándola en el servidor
+
+````
+api.version=1.0
+```
+
+``` 
+@RestController
+@RequestMapping("/api/users")
+public class UserController {
+
+    @Value("${api.version}")
+    private String apiVersion;
+
+    @GetMapping
+    public ResponseEntity<String> getUsers() {
+        if ("v1".equals(apiVersion)) {
+            // Lógica para la versión v1 de la API
+            return ResponseEntity.ok("Users API v1");
+        } else if ("v2".equals(apiVersion)) {
+            // Lógica para la versión v2 de la API
+            return ResponseEntity.ok("Users API v2");
+        } else {
+            // Versión no compatible
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid API version");
+        }
+    }
+}
+``` 
+
+---
+
 ## Cambios en los DTO
 
 ### Incluir un objeto anidado simple
