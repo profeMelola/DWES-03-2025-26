@@ -419,9 +419,12 @@ spring.config.import=classpath:mi-config.properties
 También podría añadirse a la clase marcada como @Configuration:
 
 ```
-@PropertySources({
-        @PropertySource(value="classpath:values.properties", encoding = "UTF-8"),
-})
+@Configuration
+@PropertySource(value = "classpath:mi-config.properties", encoding = "UTF-8")
+@EnableConfigurationProperties(DawConfig.class)
+public class AppConfig {
+    // No necesita contenido: su función es registrar la configuración
+}
 ```
 
 **DTO DawResponse con Lombok**
