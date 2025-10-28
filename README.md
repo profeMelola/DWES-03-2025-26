@@ -78,7 +78,7 @@ https://www.jetbrains.com/help/idea/spring-support-tutorial.html
 ## Apoyo teoría
 - Java en general
     - [Api Stream](./APOYO_TEORIA/api-stream.md)
-    - [Comparators](./APOYO_TEORIA/comparator.md)
+    - [Comparator](./APOYO_TEORIA/comparators.md)
 - [Api REST](./APOYO_TEORIA/API-REST.md) 
 - [Anotaciones Servicio y Controlador](./APOYO_TEORIA/Anotaciones-Servicio-Controlador.md)
 - [Validaciones](./APOYO_TEORIA/Validaciones.md)
