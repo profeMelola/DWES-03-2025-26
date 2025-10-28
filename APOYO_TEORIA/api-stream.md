@@ -14,7 +14,7 @@ Más información [Programación Funcional](https://github.com/profeMelola/DWES-
 ---
 ## Con qué clases se usa?
 
-Principalmente con colecciones **Set y List.**
+Principalmente con colecciones **Set y List** pero también podemos usarlo con **Map**
 
 <img width="828" height="581" alt="imagen" src="https://github.com/user-attachments/assets/d8923865-bd86-413e-a345-b9eeaa286185" />
 
@@ -101,6 +101,38 @@ List<Integer> transactionsIds =
 
 <img width="831" height="724" alt="imagen" src="https://github.com/user-attachments/assets/f7d46283-f39e-4e22-bf89-7f208a430291" />
 
+
+---
+
+## API Stream con Map
+
+```
+// Recorrer e imprimir (con forEach)
+productos.forEach((clave, valor) -> 
+    System.out.println(clave + " cuesta " + valor + " €"));
+
+// Filtrar con Stream (por ejemplo, precios mayores de 1.0)
+productos.entrySet().stream()
+    .filter(e -> e.getValue() > 1.0)
+    .forEach(e -> System.out.println(e.getKey() + " -> " + e.getValue()));
+
+
+// Obtener solo los nombres de productos caros
+List<String> caros = productos.entrySet().stream()
+    .filter(e -> e.getValue() > 1.0)
+    .map(Map.Entry::getKey)
+    .toList();
+
+System.out.println(caros); 
+
+
+// Sumar todos los precios
+double total = productos.values().stream()
+    .mapToDouble(Double::doubleValue)
+    .sum();
+
+System.out.println("Total: " + total);
+```
 
 ---
 
