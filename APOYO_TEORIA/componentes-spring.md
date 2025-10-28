@@ -2,6 +2,8 @@
 
 Estas anotaciones indican a Spring qué tipo de componente es cada clase dentro de la aplicación y permiten que el contenedor de Spring las gestione automáticamente como *beans*.
 
+<img width="823" height="437" alt="imagen" src="https://github.com/user-attachments/assets/d8c439d9-ff2f-4152-b539-0fc2855a1b8c" />
+
 ---
 
 ## @SpringBootApplication
