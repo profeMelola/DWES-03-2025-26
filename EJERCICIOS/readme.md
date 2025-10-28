@@ -329,11 +329,6 @@ Por ejemplo, si intentas enviar un JSON con datos inválidos:
 }
 ``` 
 
-Ejemplo de otras validaciones:
-
-![image](https://github.com/user-attachments/assets/cb5168ba-e896-49fc-b17d-d9731ee5feea)
-
-
 ___
 
 ## Configuración personalizada
