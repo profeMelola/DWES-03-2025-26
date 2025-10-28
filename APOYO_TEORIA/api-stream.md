@@ -187,7 +187,7 @@ Files.walk(Path.of("src"))
 
 ```
 
-### Leer líneas d eun fichero
+### Leer líneas de un fichero
 
 
 ```
