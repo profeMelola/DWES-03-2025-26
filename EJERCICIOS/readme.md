@@ -255,7 +255,8 @@ public ResponseEntity<ErrorDTO> handleGenericException(Exception ex) {
 
 ```
 
-**Otra forma más simple: **
+**Otra forma más simple:**
+
 ```
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 @ExceptionHandler(MethodArgumentNotValidException.class)
