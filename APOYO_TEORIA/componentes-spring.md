@@ -146,3 +146,28 @@ public class AppConfig {
 | @Repository | Acceso a datos | Capa de persistencia |
 | @Entity | Entidad de base de datos | Modelo |
 | @Configuration | Define beans/configuración | Configuración |
+
+--- 
+# Scope
+
+
+La anotación **@Scope** en Spring Boot se utiliza para definir el alcance de un componente gestionado por el contenedor de Spring. Permite especificar cómo se crean y se mantienen las instancias de un componente en el contexto de la aplicación.
+
+Existen diferentes valores que se pueden asignar a la anotación @Scope:
+
+- **Singleton (valor por defecto):** Indica que solo se creará una única instancia del componente en el contexto de la aplicación. Esta instancia será compartida por todos los hilos y solicitudes que accedan al componente.
+- **Prototype:** Indica que se creará una nueva instancia del componente cada vez que sea solicitado. Cada solicitud obtendrá una instancia independiente del componente.
+- **Request:** Indica que se creará una nueva instancia del componente para cada solicitud web que lo requiera. Cada solicitud obtendrá una instancia independiente del componente.
+- **Session:** Indica que se creará una nueva instancia del componente para cada sesión web. Cada sesión obtendrá una instancia independiente del componente.
+- **GlobalSession:** Similar al alcance de sesión, pero se utiliza en aplicaciones que utilizan el ámbito de sesión global.
+
+Para usar la anotación @Scope, simplemente se debe colocar encima de la declaración de la clase del componente y especificar el valor del alcance deseado. Por ejemplo:
+
+``` 
+@Component
+@Scope("prototype") // @Scope("singleton")
+public class MiComponente {
+   // ...
+}
+```
+
