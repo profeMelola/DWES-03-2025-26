@@ -508,28 +508,34 @@ api.version=1.0
 ```
 
 ``` 
-@RestController
-@RequestMapping("/api/users")
-public class UserController {
+
+@Configuration
+public class ApiVersionConfig {
 
     @Value("${api.version}")
-    private String apiVersion;
+    private String version;
 
-    @GetMapping
-    public ResponseEntity<String> getUsers() {
-        if ("v1".equals(apiVersion)) {
-            // Lógica para la versión v1 de la API
-            return ResponseEntity.ok("Users API v1");
-        } else if ("v2".equals(apiVersion)) {
-            // Lógica para la versión v2 de la API
-            return ResponseEntity.ok("Users API v2");
-        } else {
-            // Versión no compatible
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid API version");
-        }
+    public String getVersion() {
+        return version;
     }
 }
+
 ``` 
+
+```
+
+
+@RestController
+@RequestMapping("/api/v${api.version}/productos")
+public class ProductoController {
+
+    @GetMapping
+    public String listar() {
+        return "Listado de productos";
+    }
+}
+
+```
 
 ---
 
