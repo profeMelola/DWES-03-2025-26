@@ -503,7 +503,7 @@ Proporciona un marco para gestionar los cambios en la API de manera efectiva y p
 
 Podemos hacerlo desde el fichero properties añadiendo la clave y recuperándola en el servidor
 
-````
+```
 api.version=1.0
 ```
 
