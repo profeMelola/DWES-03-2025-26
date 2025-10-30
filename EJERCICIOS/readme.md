@@ -160,7 +160,7 @@ Herramienta que genera automáticamente el código de mapeo entre objetos, muy �
 | **GET**    | `/api/productos`      | Obtiene la lista de todos los productos | —                                        | `List<ProductoDTO>`       | `200 OK`                           |
 | **GET**    | `/api/productos/{codigo}` | Obtiene un producto por su código           | —                                        | `ProductoDTO`             | `200 OK` o `404 Not Found`         |
 | **PUT**    | `/api/productos/{codigo}` | Actualiza un producto existente         | `ProductoDTO`                            | `ProductoDTO` actualizado | `200 OK` o `404 Not Found`         |
-| **DELETE** | `/api/productos/{codigo}` | Elimina un producto existente           | —                                        | —                         | `204 No Content` o `404 Not Found` |
+| **DELETE** | `/api/productos/{codigo}` | Elimina un producto existente           | —                                        |  `ErrorDTO` si no existe el prod o nada... | `204 No Content` o `404 Not Found` |
 
 
 En tu entidad Producto, el campo fabricante es obligatorio (optional = false), por lo que el DTO debe incluirlo de alguna forma en el POST /api/productos:
