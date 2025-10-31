@@ -13,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RequiredArgsConstructor // crear un constructor con propiedades final
@@ -88,10 +89,13 @@ public class ProductoController {
                                       message="El código debe tener 3 dígitos + 1 letra May al final"
                               )
                                            String codigo) {
-        if (productoService.deleteByCodigo(codigo))
-            return ResponseEntity.noContent().build(); // 204... ok!
+//        if (productoService.deleteByCodigo(codigo))
+//            return ResponseEntity.noContent().build(); // 204... ok!
+        //return ResponseEntity.notFound().build(); // 404
 
-        return ResponseEntity.notFound().build(); // 404
+        productoService.deleteByCodigo(codigo);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+
     }
 
     @GetMapping("/parse-int")
@@ -104,5 +108,45 @@ public class ProductoController {
         //return "Parsed number "+number;
     }
 
+
+    @PutMapping("/{codigo}")
+    public ResponseEntity<ProductoDTO> update(
+            @PathVariable String codigo,
+            @Valid @RequestBody ProductoDTO productoDTO
+    ) {
+
+        Optional<ProductoDTO> dto = productoService.update(codigo, productoDTO);
+
+        if (dto.isPresent()) {
+            return ResponseEntity.ok(dto.get());
+        }
+
+        return ResponseEntity.notFound().build();
+
+    }
+
+    @PatchMapping("/{codigo}")
+    public ResponseEntity<ProductoDTO> updateParcial(@Valid @RequestBody Map<String,Object> camposActualizados, @PathVariable String codigo) {
+
+        Optional<ProductoDTO> dto = productoService.updateParcial(codigo, camposActualizados);
+
+        if (dto.isPresent()) {
+            return ResponseEntity.ok(dto.get());
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+
+    @PatchMapping("/dto/{codigo}")
+    public ResponseEntity<ProductoDTO> updateParcial(@Valid @RequestBody ProductoDTO productoDTO, @PathVariable String codigo) {
+
+        Optional<ProductoDTO> dto = productoService.updateParcialdto(codigo, productoDTO);
+
+        if (dto.isPresent()) {
+            return ResponseEntity.ok(dto.get());
+        }
+
+        return ResponseEntity.notFound().build();
+    }
 
 }

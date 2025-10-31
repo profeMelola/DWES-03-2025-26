@@ -100,4 +100,23 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(ProductoNotFoundException.class)
+    public ResponseEntity<ErrorDTO> handleProductoNotFoundException(ProductoNotFoundException ex) {
+
+        // 1. crear el objeto ErrorDTO con toda la info
+
+        ErrorDTO errorDTO = ErrorDTO.builder()
+                .message("PRODUCTO NO ENCONTRADO")
+                .timestamp(LocalDateTime.now())
+                .details(
+                        Map.of("exception", ex.getClass().getSimpleName(),
+                                "message", ex.getMessage()
+                        )
+
+                )
+                .build();
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorDTO);
+
+    }
 }
