@@ -218,3 +218,15 @@ Panel de administración /admin con opciones para:
     - Ticket medio por restaurante.
     - Clientes más activos.
     - Los datos se obtienen mediante endpoints avanzados del API REST y se presentan en tablas o gráficos (por ejemplo, con Chart.js).
+
+---
+
+# 3. Dockerizar todo el entorno
+`
+Un docker-compose.yml con 3 contenedores principales:
+
+| Servicio               | Descripción                                                                       | Imagen base               |
+| ---------------------- | --------------------------------------------------------------------------------- | ------------------------- |
+| 🧩 **foodexpress-api** | La API REST (Spring Boot, puerto 8081). Expone endpoints REST + JWT + JPA.        | `openjdk:21-jdk-slim`     |
+| 🌐 **foodexpress-web** | La aplicación MVC (Thymeleaf, puerto 8080). Consume la API vía HTTP.              | `openjdk:21-jdk-slim`     |
+| 🗄️ **foodexpress-db** | Base de datos relacional persistente (reemplaza H2) → **PostgreSQL** o **MySQL**. | `postgres:16` / `mysql:8` |
