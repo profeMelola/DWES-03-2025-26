@@ -1,10 +1,18 @@
-# FoodExpress API Rest
+# FoodExpress 
 
 Simula una plataforma de pedidos de comida a domicilio tipo Uber Eats /
 Glovo.
 
 ![alt text](image.png)
 
+
+Entorno completo con dos apps Spring:
+
+- FoodExpress API (ya la tienes): REST + JPA + JWT.
+- FoodExpress Web MVC: aplicación Spring Boot MVC + Thymeleaf que consume la API.
+
+
+# 1. FoodExpress API Rest
 Trabajarás con:
 
 - Spring Boot
@@ -135,3 +143,78 @@ spring.h2.console.path=/h2-console
 
 ---
 
+# 2. FoodExpress Web MVC
+
+FoodExpress Web MVC es una aplicación Spring Boot MVC con Thymeleaf que actúa como interfaz web del API REST FoodExpress, permitiendo a los usuarios interactuar con el sistema de pedidos de comida a domicilio mediante páginas HTML dinámicas y seguras.
+
+Se trata de una aplicación cliente del servicio REST (foodexpress-api), que se comunica con él a través de peticiones HTTP autenticadas con JWT.
+
+El objetivo es reproducir un escenario real de integración entre una API backend y una aplicación web construida con Spring Boot MVC.
+
+El proyecto está diseñado para aprender y practicar:
+
+✅ Consumo de un API REST desde Spring Boot MVC usando WebClient.
+
+✅ Autenticación con JWT (login vía API y almacenamiento de token en sesión).
+
+✅ Gestión de vistas dinámicas con Thymeleaf (formularios, listados, detalle, fragmentos).
+
+✅ Paginación y ordenación reales desde la API.
+
+✅ Seguridad y roles con Spring Security en la capa web.
+
+✅ Integración de plantillas HTML responsivas.
+
+✅ Gestión de sesión y flujo de navegación seguro.
+
+| Tecnología                     | Uso                                             |
+| ------------------------------ | ----------------------------------------------- |
+| **Spring Boot MVC**            | Framework para controladores web y vistas.      |
+| **Thymeleaf**                  | Motor de plantillas HTML.                       |
+| **Spring Security**            | Control de acceso a vistas, roles y sesión.     |
+| **Spring WebFlux / WebClient** | Consumo de endpoints REST del API.              |
+| **Bootstrap 5**                | Diseño y maquetación responsive.                |
+| **H2 / API REST FoodExpress**  | Fuente de datos (la API expone la información). |
+| **JWT (JSON Web Token)**       | Autenticación entre las dos aplicaciones.       |
+
+---
+
+## Funcionalidades principales
+
+### Autenticación y seguridad
+
+- Formulario de login (/login) autenticado contra la API (/auth/login).
+- Obtención y almacenamiento del token JWT en sesión.
+- Acceso a las vistas condicionado por el rol (ADMIN, CLIENTE, REPARTIDOR).
+- Logout con limpieza de sesión.
+
+### Catálogo de restaurantes y platos
+
+- Listado paginado de restaurantes (/restaurantes).
+- Listado y detalle de platos con filtros por categoría o restaurante.
+- Vista de detalle de plato (/platos/{id}) con información completa.
+- Posibilidad de añadir platos al carrito (almacenado en sesión).
+
+### Gestión de pedidos
+
+- Visualización del carrito actual y confirmación de pedido.
+- Creación de pedidos a través de la API (POST /api/pedidos).
+- Listado de pedidos del usuario autenticado (/mis-pedidos).
+- Detalle de cada pedido (estado, fecha, importe, platos).
+- Cancelación de pedidos si aún no fueron entregados.
+
+### Zona administrativa (rol ADMIN)
+
+Panel de administración /admin con opciones para:
+- Gestionar restaurantes y platos (CRUD completo).
+- Consultar pedidos y cambiar estado.
+- Visualizar reportes y estadísticas (ventas, top platos, clientes frecuentes, etc.) obtenidos desde la API.
+
+### Reportes y estadísticas (opcional)
+
+- Visualización de métricas como:
+    - Total de ventas por restaurante.
+    - Platos más vendidos.
+    - Ticket medio por restaurante.
+    - Clientes más activos.
+    - Los datos se obtienen mediante endpoints avanzados del API REST y se presentan en tablas o gráficos (por ejemplo, con Chart.js).
