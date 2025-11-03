@@ -145,6 +145,8 @@ spring.h2.console.path=/h2-console
 
 # 2. FoodExpress Web MVC
 
+![alt text](image-1.png)
+
 FoodExpress Web MVC es una aplicación Spring Boot MVC con Thymeleaf que actúa como interfaz web del API REST FoodExpress, permitiendo a los usuarios interactuar con el sistema de pedidos de comida a domicilio mediante páginas HTML dinámicas y seguras.
 
 Se trata de una aplicación cliente del servicio REST (foodexpress-api), que se comunica con él a través de peticiones HTTP autenticadas con JWT.
