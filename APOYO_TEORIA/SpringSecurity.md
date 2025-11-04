@@ -211,6 +211,15 @@ Crea un servicio para generar y validar tokens JWT.
 
 **JwtService**
 
+Añade estas propiedades a application.properties:
+
+```
+# SECRET KEY (para producción)
+#jwt.secret = tu_clave_super_secreta_123456789012345678901234567890
+# especificado en horas
+jwt.expiration = 2
+```
+
 ### Configurar filtros para interceptar solicitudes
 
 Spring Security usa filtros para interceptar solicitudes antes de que lleguen a los controladores. 
