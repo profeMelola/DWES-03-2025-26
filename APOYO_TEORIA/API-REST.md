@@ -213,7 +213,7 @@ https://www.jwt.io/
 
 ![alt text](image-3.png)
 
-WT (JSON Web Token) es un estándar para la creación de tokens de acceso. Se utiliza principalmente para autenticación y autorización.
+JWT (JSON Web Token) es un estándar para la creación de tokens de acceso. Se utiliza principalmente para autenticación y autorización.
 
 Funcionamiento:
 
