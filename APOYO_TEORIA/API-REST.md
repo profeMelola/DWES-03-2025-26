@@ -274,9 +274,14 @@ El payload contiene las reclamaciones (claims). Las reclamaciones son declaracio
 {
   "sub": "1234567890",
   "name": "John Doe",
-  "admin": true
+  "admin": true,
+  "iat": 1516239022
 }
 ```
+- sub: subject: identificador del usuario o enteidad a quien pertenece el token. Representa el ID del usuario en la BD.
+- name: nombre de usuario.
+- admin: si el usuario tiene permisos de administrador.
+- iat: issued at: fecha de emisión. Número entero con el tiemstamp UNIX ( segundos desde 1 de enero de 1970). Indica cúando se generó el token.
 
 Este JSON también es codificado en Base64Url para formar la segunda parte del JWT.
 
