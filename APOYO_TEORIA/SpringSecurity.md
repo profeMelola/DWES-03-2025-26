@@ -81,6 +81,20 @@ public class Rol {
 
 **Entidad User:**
 
+En Spring Security, cuando haces login con usuario y contraseña, el framework necesita saber:
+- Quién eres → el “username”.
+- Qué permisos tienes → los “roles” o “authorities”.
+
+Para ello, Spring Security define una interfaz llamada UserDetails, que describe cómo debe lucir un “usuario autenticable”.
+
+La implementamos directamente en la entidad Usuario, de modo que Spring pueda usar los datos del usuario de la BD.
+
+1. Spring llama a tu implementación de UserDetailsService.loadUserByUsername().
+2. Este servicio busca al Usuario en la BD.
+3. Spring crea un UserDetails (tu Usuario).
+4. Compara la contraseña cifrada con la introducida.
+5. Si todo es correcto, crea un Authentication en el contexto con los roles de getAuthorities().
+
 ```
 @Entity
 @Table(name = "users")
@@ -97,6 +111,7 @@ public class Usuario implements UserDetails {
     @Column(nullable = false)
     private String password;
 
+    // fetch = FetchType.EAGER indica que los roles se cargan siempre junto con el usuario, lo cual es necesario porque Spring Security los necesita inmediatamente para construir las autoridades.
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
@@ -122,6 +137,7 @@ public class Usuario implements UserDetails {
 
     // --------------------- 5 MÉTODOS DE LA INTERFACE UserDetails -----------------
 
+    // Devuelve los roles convertidos en objetos GrantedAuthority
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream()
@@ -209,7 +225,11 @@ public interface RoleRepository extends JpaRepository<Role, Long> {
 
 Crea un servicio para generar y validar tokens JWT.
 
-**JwtService**
+**JwtService:**
+
+- Generar tokens JWT con clave secreta.
+- Extraer información del token.
+- Valida si el token pertenece al usuario y si está expirado.
 
 Añade estas propiedades a application.properties:
 
