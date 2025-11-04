@@ -590,4 +590,5 @@ Se utiliza principalmente para autenticación y autorización.
 - Autorización: El cliente envía el JWT en las solicitudes subsecuentes para acceder a recursos protegidos.
 - Verificación: El servidor verifica el JWT antes de conceder acceso.
 
+[Api Rest - JWT](https://github.com/profeMelola/DWES-03-2025-26/blob/main/APOYO_TEORIA/API-REST.md#jwt)
 [Spring Security](../APOYO_TEORIA/SpringSecurity.md)
