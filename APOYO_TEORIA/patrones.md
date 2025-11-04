@@ -241,6 +241,21 @@ public class ErrorDTO {
 
 ```
 
+**Uso:**
+
+```
+        ErrorDTO errorDTO = ErrorDTO.builder()
+                .message("PRODUCTO NO ENCONTRADO")
+                .timestamp(LocalDateTime.now())
+                .details(
+                        Map.of("exception", ex.getClass().getSimpleName(),
+                                "message", ex.getMessage()
+                        )
+
+                )
+                .build();
+```
+
 ### 3. Patrón Strategy (Comportamiento)
 Permite cambiar el comportamiento de una clase en tiempo de ejecución.
 
