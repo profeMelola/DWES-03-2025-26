@@ -239,9 +239,9 @@ Registrar nuevo usuario:
     - Registra un nuevo usuario en la base de datos.
     - Devuelve un mensaje de éxito.
 
-### POST /auth/login**
+### POST /auth/login
 
-Hacer login;
+Hacer login:
 
     - Recibe un usuario y contraseña.
     - Autentica al usuario.
