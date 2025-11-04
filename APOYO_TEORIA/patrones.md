@@ -205,6 +205,11 @@ public class ErrorDTO {
         this.details = builder.details;
     }
 
+    // Método estático para obtener el builder
+    public static Builder builder() {
+        return new Builder();
+    }    
+
     // Clase interna estática Builder
     // Es estática: no depende de una instancia de ErrorDTO
     // Contiene los mismos campos que la clase principal.
