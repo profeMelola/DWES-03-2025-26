@@ -589,3 +589,5 @@ Se utiliza principalmente para autenticación y autorización.
 - Generación: El servidor genera un JWT y lo devuelve al cliente.
 - Autorización: El cliente envía el JWT en las solicitudes subsecuentes para acceder a recursos protegidos.
 - Verificación: El servidor verifica el JWT antes de conceder acceso.
+
+[Spring Security](../APOYO_TEORIA/SpringSecurity.md)

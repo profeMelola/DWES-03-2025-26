@@ -83,6 +83,7 @@ https://www.jetbrains.com/help/idea/spring-support-tutorial.html
 - [Api REST](./APOYO_TEORIA/API-REST.md) 
 - [Anotaciones Servicio y Controlador](./APOYO_TEORIA/Anotaciones-Servicio-Controlador.md)
 - [Validaciones](./APOYO_TEORIA/Validaciones.md)
+- [Spring Security](./APOYO_TEORIA/SpringSecurity.md)
 - [JPA](./APOYO_TEORIA/JPA.md)
      - [Comparativa entre JPA y SpringDataJPA](./APOYO_TEORIA/Comparativa_JPA_vs_SpringDataJPA.md)
      - [Asociaciones](./APOYO_TEORIA/JPA-%20Asociaciones.md)
