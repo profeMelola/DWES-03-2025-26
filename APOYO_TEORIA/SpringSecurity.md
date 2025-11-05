@@ -239,6 +239,7 @@ Añade estas propiedades a application.properties:
 # especificado en horas
 jwt.expiration = 2
 ```
+[Propiedades en producción](./UsoPropiedadesProduccion.md)
 
 ### Configurar filtros para interceptar solicitudes
 
