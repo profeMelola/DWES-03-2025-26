@@ -57,6 +57,8 @@ Servicio que proporcionará las funcionalidades para:
 
 ![alt text](image-1.png)
 
+![alt text](image-2.png)
+
 --- 
 
 ## AÑADIR CAPA DE SEGURIDAD
@@ -64,4 +66,4 @@ Servicio que proporcionará las funcionalidades para:
 Inventa reglas de seguridad a los diferentes endpoits.
 
 
-![alt text](image-2.png)
+
