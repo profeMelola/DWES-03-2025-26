@@ -1,5 +1,6 @@
 package es.daw.productoapirest.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import es.daw.productoapirest.dto.ProductoDTO;
 import es.daw.productoapirest.entity.Fabricante;
 import es.daw.productoapirest.entity.Producto;
@@ -24,6 +25,7 @@ public class ProductoService {
     private final ProductoRepository productoRepository;
     private final FabricanteRepository fabricanteRepository;
     private final ProductoMapper productoMapper;
+    private final ObjectMapper objectMapper;
 
 //    @Autowired
 //    public ProductoService(ProductoRepository productoRepository, ProductoMapper productoMapper, .....) {
@@ -149,20 +151,31 @@ public class ProductoService {
             modificar la estructura y el comportamiento de clases, métodos, constructores y
             campos en tiempo de ejecución.
          */
-        camposActualizados.forEach(
-                (key, value) -> {
-                    Field field = ReflectionUtils.findField(Producto.class, key);
+        camposActualizados.forEach((key, value) -> {
 
-                    if (field != null){
-                        field.setAccessible(true); //permite acceder a campos privados...
-                        ReflectionUtils.setField(field, producto, value); // producto.setXXX(YYY);
-                    }
-                    else{
-                        // 404 illegal argument... spring???
-                        throw new IllegalArgumentException("Campo no válido: "+key);
-                    }
-                }
-        );
+            // CASO ESPECIAL: campo virtual "codigoFabricante"
+            if ("codigoFabricante".equals(key)) {
+                Integer idFabricante = objectMapper.convertValue(value, Integer.class);
+
+                Fabricante fabricante = fabricanteRepository.findById(idFabricante)
+                        .orElseThrow(() -> new RuntimeException(
+                                "Fabricante no encontrado con id: " + idFabricante));
+
+                producto.setFabricante(fabricante);
+                return; // saltamos al siguiente campo
+            }
+
+            // Resto de campos: usar reflexión
+            Field field = ReflectionUtils.findField(Producto.class, key);
+
+            if (field != null) {
+                field.setAccessible(true);
+                Object valorConvertido = objectMapper.convertValue(value, field.getType());
+                ReflectionUtils.setField(field, producto, valorConvertido);
+            } else {
+                throw new IllegalArgumentException("Campo no válido: " + key);
+            }
+        });
 
         Producto productoSalvado = productoRepository.save(producto);
         return Optional.of(productoMapper.toDto(productoSalvado));
@@ -175,7 +188,15 @@ public class ProductoService {
         Producto producto = productoRepository.findByCodigo(codigo)
                 .orElseThrow(() -> new ProductoNotFoundException("Producto con codigo "+codigo+" no encontrado"));
 
-        // ??????????????
+        if (productoDTO.getNombre() != null) producto.setNombre(productoDTO.getNombre());
+        if (productoDTO.getPrecio() != null) producto.setPrecio(productoDTO.getPrecio());
+        if (productoDTO.getCodigo() != null) producto.setCodigo(productoDTO.getCodigo());
+
+        if (productoDTO.getCodigoFabricante() != null){
+            Fabricante fab = fabricanteRepository.findById(productoDTO.getCodigoFabricante())
+                    .orElseThrow(() -> new RuntimeException("No se encontró el fabricante con codigo "+productoDTO.getCodigoFabricante()));
+            producto.setFabricante(fab);
+        }
 
         Producto productoSalvado = productoRepository.save(producto);
         return Optional.of(productoMapper.toDto(productoSalvado));

@@ -132,7 +132,12 @@ public class ProductoController {
             modificar la estructura y el comportamiento de clases, métodos, constructores y
             campos en tiempo de ejecución.
          */
-        // pendiente con reflexión
+        Optional<ProductoDTO> dto = productoService.updateParcialReflect(codigo,propiedades);
+
+        if (dto.isPresent()) {
+            return ResponseEntity.ok(dto.get());
+        }
+
         return ResponseEntity.notFound().build();
     }
 

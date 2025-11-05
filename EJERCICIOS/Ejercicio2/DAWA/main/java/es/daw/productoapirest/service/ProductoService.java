@@ -1,5 +1,6 @@
 package es.daw.productoapirest.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import es.daw.productoapirest.dto.ProductoDTO;
 import es.daw.productoapirest.entity.Fabricante;
 import es.daw.productoapirest.entity.Producto;
@@ -12,11 +13,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -39,6 +43,7 @@ public class ProductoService {
     private final ProductoRepository productoRepository;
     private final FabricanteRepository fabricanteRepository;
     private final ProductoMapper productoMapper;
+    private final ObjectMapper objectMapper;
 
 //    // No es necesario el constructor con @Autowired gracias a @RequiredArgsConstructor
 //    @Autowired
@@ -155,7 +160,7 @@ public class ProductoService {
 
         if ( productoDTO.getNombre() != null) producto.setNombre(productoDTO.getNombre());
         if ( productoDTO.getPrecio() != null) producto.setPrecio(productoDTO.getPrecio());
-        if ( productoDTO.getPrecio() != null) producto.setCodigo(productoDTO.getCodigo());
+        if ( productoDTO.getCodigo() != null) producto.setCodigo(productoDTO.getCodigo());
 
         if (productoDTO.getCodigoFabricante() != null){
             Fabricante  fabricante = fabricanteRepository.findById(productoDTO.getCodigoFabricante())
@@ -169,5 +174,42 @@ public class ProductoService {
         return Optional.of(productoMapper.toDto(productoGuardado));
     }
 
+
+    public Optional<ProductoDTO> updateParcialReflect(String codigo, Map<String,Object> camposActualizados) {
+
+        Producto producto = productoRepository.findByCodigo(codigo)
+                .orElseThrow(() -> new ProductoNotFoundException("Producto con codigo "+codigo+" no encontrado"));
+
+        // -------------
+        camposActualizados.forEach((key, value) -> {
+
+            // CASO ESPECIAL: campo virtual "codigoFabricante"
+            if ("codigoFabricante".equals(key)) {
+                Integer idFabricante = objectMapper.convertValue(value, Integer.class);
+
+                Fabricante fabricante = fabricanteRepository.findById(idFabricante)
+                        .orElseThrow(() -> new RuntimeException(
+                                "Fabricante no encontrado con id: " + idFabricante));
+
+                producto.setFabricante(fabricante);
+                return; // saltamos al siguiente campo
+            }
+
+            // Resto de campos: usar reflexión
+            Field field = ReflectionUtils.findField(Producto.class, key);
+
+            if (field != null) {
+                field.setAccessible(true); // puedo acceder aunque la propiedad esté como privada
+                Object valorConvertido = objectMapper.convertValue(value, field.getType());
+                ReflectionUtils.setField(field, producto, valorConvertido);  // por ejemplo producto.setNombre(valor);
+            } else {
+                throw new IllegalArgumentException("Campo no válido: " + key);
+            }
+        });
+
+        Producto productoSalvado = productoRepository.save(producto);
+        return Optional.of(productoMapper.toDto(productoSalvado));
+
+    }
 
 }
