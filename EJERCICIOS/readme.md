@@ -593,3 +593,11 @@ Se utiliza principalmente para autenticación y autorización.
 [Api Rest - JWT](https://github.com/profeMelola/DWES-03-2025-26/blob/main/APOYO_TEORIA/API-REST.md#jwt)
 
 [Spring Security](../APOYO_TEORIA/SpringSecurity.md)
+
+## Ejemplos de roles
+
+| Rol                | Descripción                                       | Permisos comunes                                                                                         |
+| ------------------ | ------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| **ROLE_ADMIN**     | Superusuario. Puede hacer cualquier operación.    | CRUD completo (crear, leer, actualizar, borrar) en todos los recursos. Puede gestionar usuarios y roles. |
+| **ROLE_USER**      | Usuario normal. Solo puede consultar información. | GET sobre `/productos`, `/fabricantes`, etc.                                                             |
+| **ROLE_MANAGER**   | Encargado de gestión.                             | CRUD completo sobre productos y fabricantes, pero no gestión de usuarios o roles.                        |
