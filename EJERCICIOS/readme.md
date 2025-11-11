@@ -594,3 +594,13 @@ Se utiliza principalmente para autenticación y autorización.
 
 [Spring Security](../APOYO_TEORIA/SpringSecurity.md)
 
+---
+
+# AMPLIACIONES Y MEJORAS!!!
+    // -------------------------------------
+    // PENDIENTE MEJORAS EN EL REGISTRO
+    // 1. SOLUCIONAR ERROR RESPUESTA APIRESPONSE --> Solucionado!!!
+    // 2. CREAR UN AUTHSERVICE Y QUITAR LA LÓGICA DE ESTE ENDPOINT (REPOSITORY ECT...) --> Para los alumnos!
+    // 3. TRABAJAR CON UserAlreadyExistsException Y RoleNotFoundException --> Para los alumnos!
+    // 4. poder dar de alta un usuario con más de un role
+    // --------------------------------
