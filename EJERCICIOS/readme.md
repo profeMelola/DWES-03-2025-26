@@ -620,6 +620,6 @@ Se utiliza principalmente para autenticación y autorización.
 
 JWT_SECRET=e3noi/281iPrTBiF47vQkm/CIAoVtjLxpVDdz282GI8=
 JWT_EXPIRATION=2
-``
+``` 
 
     
