@@ -589,8 +589,9 @@ public class SecurityConfig {
 ```
 
 En Spring Security puedes controlar el acceso a dos niveles:
-- En la configuración global, defines qué rutas son públicas o protegidas.
-- En los controladores, con anotaciones como @PreAuthorize, defines qué roles pueden ejecutar cada método.
+- En la **configuración global**, defines qué rutas son públicas o protegidas.
+- En los **controladores**, con anotaciones como @PreAuthorize, defines qué roles pueden ejecutar cada método.
+
 ```
 @PreAuthorize("hasRole('ADMIN')")
 @PreAuthorize("hasAnyRole('USER','ADMIN')")
@@ -598,6 +599,16 @@ En Spring Security puedes controlar el acceso a dos niveles:
 @PreAuthorize("permitAll()")
 
 ```
+
+Es necesario usar la etiqueta **@EnableMethodSecurity** en SecurityConfig.
+
+**Ejemplos de roles**
+
+| Rol                | Descripción                                       | Permisos comunes                                                                                         |
+| ------------------ | ------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| **ROLE_ADMIN**     | Superusuario. Puede hacer cualquier operación.    | CRUD completo (crear, leer, actualizar, borrar) en todos los recursos. Puede gestionar usuarios y roles. |
+| **ROLE_USER**      | Usuario normal. Solo puede consultar información. | GET sobre `/productos`, `/fabricantes`, etc.                                                             |
+| **ROLE_MANAGER**   | Encargado de gestión.                             | CRUD completo sobre productos y fabricantes, pero no gestión de usuarios o roles.                        |
 
 --- 
 
