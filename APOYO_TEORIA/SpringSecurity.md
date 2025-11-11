@@ -731,3 +731,16 @@ Hacer login:
     - Recibe un usuario y contraseña.
     - Autentica al usuario.
     - Genera un JWT y lo devuelve en la respuesta.
+
+---
+
+# Dependencia para cargar automáticamente en Spring un .env
+
+```
+        <!-- carga .env -->
+        <dependency>
+            <groupId>me.paulschwarz</groupId>
+            <artifactId>spring-dotenv</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+```
