@@ -53,6 +53,8 @@ Servicio que proporcionará las funcionalidades para:
 
 ## Especificaciones de los endpoints del proyecto
 
+CORRECCIÓN!!! La requestMapping será **/api/compras**
+
 ![alt text](image.png)
 
 ![alt text](image-1.png)
