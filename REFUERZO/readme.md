@@ -53,7 +53,19 @@ Servicio que proporcionará las funcionalidades para:
 
 ## Especificaciones de los endpoints del proyecto
 
-CORRECCIÓN!!! La requestMapping será **/api/compras**
+MEJORAS!!! 
+
+- La requestMapping será **/api/compras**
+- El json devuelto:
+```
+{
+  "cliente": "Carlos Pérez",
+  "fecha": "2024-02-10 14:30",
+  "total": 1350.0
+}
+```
+
+Pista: @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
 
 ![alt text](image.png)
 
