@@ -612,6 +612,106 @@ Es necesario usar la etiqueta **@EnableMethodSecurity** en SecurityConfig.
 
 --- 
 
+### Diferencia entre "roles" y "authorities"
+
+En proyectos grandes se añaden permisos más específicos (como PRODUCT_DELETE) y se gestionan en BD con una tabla de permissions.
+
+
+| Concepto                | Ejemplo                                               | Se usa con                       | Descripción                                                        |
+| ----------------------- | ----------------------------------------------------- | -------------------------------- | ------------------------------------------------------------------ |
+| **Rol**                 | `ROLE_ADMIN`, `ROLE_USER`                             | `hasRole('ADMIN')`               | Identifica el **perfil** general de un usuario (nivel de acceso).  |
+| **Authority (permiso)** | `PRODUCT_CREATE`, `PRODUCT_DELETE`, `FABRICANTE_EDIT` | `hasAuthority('PRODUCT_DELETE')` | Permisos más **finos o específicos** sobre operaciones o recursos. |
+
+
+--- 
+
+Un rol agrupa varias authorities.
+Por ejemplo:
+
+- ROLE_ADMIN → puede crear, editar, borrar productos
+- ROLE_EDITOR → puede editar productos
+- ROLE_USER → solo puede leer productos
+
+Funciona perfectamente con hasRole('ADMIN') o hasAuthority('ROLE_ADMIN').
+
+Para usar authorities reales como PRODUCT_DELETE, PRODUCT_CREATE, etc., hay que añadir otra capa en el modelo:
+
+- Tabla roles:
+| id | name        |
+| -- | ----------- |
+| 1  | ROLE_ADMIN  |
+| 2  | ROLE_EDITOR |
+| 3  | ROLE_USER   |
+
+- Tabla permissions:
+
+| id | name              |
+| -- | ----------------- |
+| 1  | PRODUCT_CREATE    |
+| 2  | PRODUCT_EDIT      |
+| 3  | PRODUCT_DELETE    |
+| 4  | FABRICANTE_CREATE |
+
+- Tabla roles_permissions:
+
+| role_id    | permission_id |
+| ---------- | ------------- |
+| 1 (ADMIN)  | 1,2,3,4       |
+| 2 (EDITOR) | 2             |
+| 3 (USER)   | (vacío)       |
+
+```
+@Entity
+@Table(name = "roles")
+public class Rol {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "roles_permissions",
+        joinColumns = @JoinColumn(name = "role_id"),
+        inverseJoinColumns = @JoinColumn(name = "permission_id")
+    )
+    private Set<Permission> permissions;
+}
+
+```
+
+```
+@Entity
+@Table(name = "permissions")
+public class Permission {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+}
+
+```
+
+**¿Cómo Spring Security obtiene las authorities?**
+
+```
+@Override
+public Collection<? extends GrantedAuthority> getAuthorities() {
+    Set<GrantedAuthority> authorities = new HashSet<>();
+
+    // Añadir los roles (como authorities también)
+    roles.forEach(rol -> {
+        authorities.add(new SimpleGrantedAuthority(rol.getName()));
+
+        // Añadir los permisos asociados a cada rol
+        rol.getPermissions().forEach(permiso ->
+            authorities.add(new SimpleGrantedAuthority(permiso.getName()))
+        );
+    });
+
+    return authorities;
+}
+
+```
+
 ## Crear controlador para autenticación
 
 **AuthController**
