@@ -597,10 +597,29 @@ Se utiliza principalmente para autenticación y autorización.
 ---
 
 # AMPLIACIONES Y MEJORAS!!!
-    // -------------------------------------
-    // PENDIENTE MEJORAS EN EL REGISTRO
-    // 1. SOLUCIONAR ERROR RESPUESTA APIRESPONSE --> Solucionado!!!
-    // 2. CREAR UN AUTHSERVICE Y QUITAR LA LÓGICA DE ESTE ENDPOINT (REPOSITORY ECT...) --> Para los alumnos!
-    // 3. TRABAJAR CON UserAlreadyExistsException Y RoleNotFoundException --> Para los alumnos!
-    // 4. poder dar de alta un usuario con más de un role
-    // --------------------------------
+1. CREAR UN AUTHSERVICE Y QUITAR LA LÓGICA DE ESTE ENDPOINT (REPOSITORY ECT...) --> Para los alumnos!
+2. TRABAJAR CON UserAlreadyExistsException Y RoleNotFoundException --> Para los alumnos!
+3. Poder dar de alta un usuario con más de un role
+4. .env para secret key
+
+**Meter dependencia que lee automáticamente las propiedades de un .env**
+```
+<!-- https://mvnrepository.com/artifact/me.paulschwarz/spring-dotenv -->
+<dependency>
+    <groupId>me.paulschwarz</groupId>
+    <artifactId>spring-dotenv</artifactId>
+    <version>4.0.0</version>
+</dependency>
+```
+**.env:**
+
+```
+# Clave secreta en base64 (mínimo 32 bytes)
+# linux : Usa openssl rand -base64 32 para generar la clave
+# windows : Usa PowerShell [Convert]::ToBase64String((New-Object Byte[] 32 | ForEach-Object {Get-Random -Maximum 256}))
+
+JWT_SECRET=e3noi/281iPrTBiF47vQkm/CIAoVtjLxpVDdz282GI8=
+JWT_EXPIRATION=2
+``
+
+    
