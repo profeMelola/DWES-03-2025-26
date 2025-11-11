@@ -65,5 +65,13 @@ Servicio que proporcionará las funcionalidades para:
 
 Inventa reglas de seguridad a los diferentes endpoits.
 
+| Método HTTP    | Regla                                    | Acceso    |
+| -------------- | ---------------------------------------- | --------- |
+| GET /api/**    | `.permitAll()`                           | Público   |
+| POST /api/**   | `.authenticated()` o `.hasRole("ADMIN")` | Protegido |
+| PUT /api/**    | `.hasRole("ADMIN")`                      | Protegido |
+| DELETE /api/** | `.hasRole("ADMIN")`                      | Protegido |
+
+
 
 
