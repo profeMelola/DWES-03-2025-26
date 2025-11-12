@@ -637,6 +637,7 @@ Funciona perfectamente con hasRole('ADMIN') o hasAuthority('ROLE_ADMIN').
 Para usar authorities reales como PRODUCT_DELETE, PRODUCT_CREATE, etc., hay que añadir otra capa en el modelo:
 
 - Tabla roles:
+
 | id | name        |
 | -- | ----------- |
 | 1  | ROLE_ADMIN  |
