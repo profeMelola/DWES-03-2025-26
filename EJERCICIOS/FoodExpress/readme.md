@@ -35,6 +35,17 @@ Trabajarás con:
 | **Pedido** | Solicitud de comida realizada por un usuario |
 | **DetallePedido** | Relación N:M entre pedido y platos (con cantidad y subtotal) |
 
+
+| Tabla             | Descripción                                                    | Relaciones                                    |
+| ----------------- | -------------------------------------------------------------- | --------------------------------------------- |
+| `usuarios`        | Usuarios autenticados del sistema                              | N:1 con `roles`                               |
+| `roles`           | Roles de seguridad (ADMIN, CLIENTE, REPARTIDOR)                | 1:N con `usuarios`                            |
+| `restaurantes`    | Datos de restaurantes registrados                              | 1:N con `platos`, 1:N con `pedidos`           |
+| `platos`          | Platos ofrecidos por cada restaurante                          | N:1 con `restaurantes`                        |
+| `pedidos`         | Pedido realizado por un usuario (cliente)                      | N:1 con `usuarios`, 1:N con `detalles_pedido` |
+| `detalles_pedido` | Relación N:M entre `pedidos` y `platos` con cantidad, subtotal | N:1 con `pedidos`, N:1 con `platos`           |
+
+
 ---
 
 ## Configuración de la BD H2 (persistente)
@@ -65,6 +76,13 @@ spring.h2.console.path=/h2-console
 | `POST` | `/auth/register` | Registra un nuevo usuario (rol CLIENTE por defecto) |
 | `GET` | `/auth/profile` | Devuelve los datos del usuario autenticado |
 
+| Método | Endpoint         | Descripción                                         | Cuerpo / Parámetros                          | Respuesta                                 |
+| ------ | ---------------- | --------------------------------------------------- | -------------------------------------------- | ----------------------------------------- |
+| `POST` | `/auth/login`    | Inicia sesión con credenciales y devuelve un JWT    | `{ "username": "juan", "password": "1234" }` | `200 OK` → `{ "token": "eyJhbGciOi..." }` |
+| `POST` | `/auth/register` | Registra un nuevo usuario (rol CLIENTE por defecto) | `UsuarioRegistroDTO`                         | `201 CREATED` → `UsuarioDTO`              |
+| `GET`  | `/auth/profile`  | Devuelve los datos del usuario autenticado          | Header: `Authorization: Bearer <token>`      | `200 OK` → `UsuarioDTO`                   |
+
+
 ---
 
 ### Usuarios y Roles (solo ADMIN)
@@ -76,6 +94,15 @@ spring.h2.console.path=/h2-console
 | `POST` | `/api/usuarios` | Crea un nuevo usuario con rol |
 | `PUT` | `/api/usuarios/{id}` | Actualiza usuario existente |
 | `DELETE` | `/api/usuarios/{id}` | Elimina un usuario |
+
+| Método   | Endpoint             | Descripción                              | Cuerpo / Parámetros               | Respuesta                     |
+| -------- | -------------------- | ---------------------------------------- | --------------------------------- | ----------------------------- |
+| `GET`    | `/api/usuarios`      | Lista paginada de usuarios               | `?page=0&size=10&sort=nombre,asc` | `200 OK` → `Page<UsuarioDTO>` |
+| `GET`    | `/api/usuarios/{id}` | Obtiene usuario por ID                   | `id`                              | `200 OK` → `UsuarioDTO`       |
+| `POST`   | `/api/usuarios`      | Crea un nuevo usuario con rol específico | `UsuarioCreateDTO`                | `201 CREATED` → `UsuarioDTO`  |
+| `PUT`    | `/api/usuarios/{id}` | Actualiza usuario existente              | `UsuarioUpdateDTO`                | `200 OK` → `UsuarioDTO`       |
+| `DELETE` | `/api/usuarios/{id}` | Elimina usuario                          | `id`                              | `204 NO CONTENT`              |
+
 
 ---
 
@@ -89,6 +116,15 @@ spring.h2.console.path=/h2-console
 | `PUT` | `/api/restaurantes/{id}` | Actualizar restaurante *(ADMIN)* |
 | `DELETE` | `/api/restaurantes/{id}` | Eliminar restaurante *(ADMIN)* |
 | `GET` | `/api/restaurantes/buscar?nombre=...` | Buscar por nombre o zona |
+
+| Método   | Endpoint                   | Descripción                               | Cuerpo / Parámetros               | Respuesta                                           |
+| -------- | -------------------------- | ----------------------------------------- | --------------------------------- | --------------------------------------------------- |
+| `GET`    | `/api/restaurantes`        | Lista paginada de restaurantes            | `?page=0&size=10&sort=nombre,asc` | `200 OK` → `Page<RestauranteDTO>`                   |
+| `GET`    | `/api/restaurantes/{id}`   | Detalle de un restaurante                 | `id`                              | `200 OK` → `RestauranteDetalleDTO` (incluye platos) |
+| `POST`   | `/api/restaurantes`        | Crea un restaurante *(ADMIN)*             | `RestauranteCreateDTO`            | `201 CREATED` → `RestauranteDTO`                    |
+| `PUT`    | `/api/restaurantes/{id}`   | Actualiza datos del restaurante *(ADMIN)* | `RestauranteUpdateDTO`            | `200 OK` → `RestauranteDTO`                         |
+| `DELETE` | `/api/restaurantes/{id}`   | Elimina restaurante *(ADMIN)*             | `id`                              | `204 NO CONTENT`                                    |
+| `GET`    | `/api/restaurantes/buscar` | Filtro por nombre o zona                  | `?nombre=pizza`                   | `200 OK` → `List<RestauranteDTO>`                   |
 
 ---
 
@@ -104,6 +140,17 @@ spring.h2.console.path=/h2-console
 | `PUT` | `/api/platos/{id}` | Actualizar plato *(ADMIN)* |
 | `DELETE` | `/api/platos/{id}` | Eliminar plato *(ADMIN)* |
 
+| Método   | Endpoint                                  | Descripción                        | Cuerpo / Parámetros               | Respuesta                   |
+| -------- | ----------------------------------------- | ---------------------------------- | --------------------------------- | --------------------------- |
+| `GET`    | `/api/platos`                             | Lista paginada de platos           | `?page=0&size=5&sort=precio,desc` | `200 OK` → `Page<PlatoDTO>` |
+| `GET`    | `/api/platos/{id}`                        | Detalle de un plato                | `id`                              | `200 OK` → `PlatoDTO`       |
+| `GET`    | `/api/platos/categoria/{categoria}`       | Filtra por categoría (ej. “Pasta”) | `categoria`                       | `200 OK` → `List<PlatoDTO>` |
+| `GET`    | `/api/platos/restaurante/{restauranteId}` | Platos de un restaurante           | `restauranteId`                   | `200 OK` → `List<PlatoDTO>` |
+| `POST`   | `/api/platos`                             | Crea un nuevo plato *(ADMIN)*      | `PlatoCreateDTO`                  | `201 CREATED` → `PlatoDTO`  |
+| `PUT`    | `/api/platos/{id}`                        | Actualiza un plato *(ADMIN)*       | `PlatoUpdateDTO`                  | `200 OK` → `PlatoDTO`       |
+| `DELETE` | `/api/platos/{id}`                        | Elimina un plato *(ADMIN)*         | `id`                              | `204 NO CONTENT`            |
+
+
 ---
 
 ### Pedidos
@@ -118,6 +165,17 @@ spring.h2.console.path=/h2-console
 | `GET` | `/api/pedidos/usuario/{usuarioId}` | Pedidos por usuario *(ADMIN)* |
 | `GET` | `/api/pedidos/fecha?desde=...&hasta=...` | Filtrar por rango de fechas |
 
+| Método   | Endpoint                           | Descripción                                            | Cuerpo / Parámetros                            | Respuesta                     |
+| -------- | ---------------------------------- | ------------------------------------------------------ | ---------------------------------------------- | ----------------------------- |
+| `GET`    | `/api/pedidos`                     | Lista de pedidos (ADMIN: todos, CLIENTE: solo propios) | `?page=0&size=5`                               | `200 OK` → `Page<PedidoDTO>`  |
+| `GET`    | `/api/pedidos/{id}`                | Detalle del pedido (con platos y totales)              | `id`                                           | `200 OK` → `PedidoDetalleDTO` |
+| `POST`   | `/api/pedidos`                     | Crea nuevo pedido *(CLIENTE)*                          | `PedidoCreateDTO` con `List<DetallePedidoDTO>` | `201 CREATED` → `PedidoDTO`   |
+| `PUT`    | `/api/pedidos/{id}/estado`         | Actualiza estado *(ADMIN o REPARTIDOR)*                | `{"estado": "ENTREGADO"}`                      | `200 OK` → `PedidoDTO`        |
+| `DELETE` | `/api/pedidos/{id}`                | Cancela pedido *(CLIENTE antes de confirmar)*          | `id`                                           | `204 NO CONTENT`              |
+| `GET`    | `/api/pedidos/usuario/{usuarioId}` | Pedidos de un cliente específico *(ADMIN)*             | `usuarioId`                                    | `200 OK` → `List<PedidoDTO>`  |
+| `GET`    | `/api/pedidos/fecha`               | Filtro por rango de fechas                             | `?desde=2025-10-01&hasta=2025-10-15`           | `200 OK` → `List<PedidoDTO>`  |
+
+
 ---
 
 ### Reportes y Estadísticas (solo ADMIN)
@@ -130,6 +188,13 @@ spring.h2.console.path=/h2-console
 | `/api/reportes/ingresos-categoria` | Ingresos por categoría de plato |
 | `/api/reportes/ticket-medio` | Promedio de gasto por restaurante |
 | `/api/reportes/repartidores-top` | Repartidores con más entregas |
+
+| Método | Endpoint                            | Descripción                     | Parámetros                           | Respuesta                                |
+| ------ | ----------------------------------- | ------------------------------- | ------------------------------------ | ---------------------------------------- |
+| `GET`  | `/api/reportes/ventas`              | Total de ventas por restaurante | `?desde=2025-10-01&hasta=2025-10-31` | `200 OK` → `List<VentaRestauranteDTO>`   |
+| `GET`  | `/api/reportes/top-platos`          | Platos más vendidos (top N)     | `?limite=5`                          | `200 OK` → `List<PlatoVentaDTO>`         |
+| `GET`  | `/api/reportes/clientes-frecuentes` | Clientes con más pedidos        | -                                    | `200 OK` → `List<ClienteEstadisticaDTO>` |
+
 
 ---
 
@@ -179,6 +244,69 @@ El proyecto está diseñado para aprender y practicar:
 | **H2 / API REST FoodExpress**  | Fuente de datos (la API expone la información). |
 | **JWT (JSON Web Token)**       | Autenticación entre las dos aplicaciones.       |
 
+![alt text](image-4.png)
+
+---
+
+## 1. Dependencias
+
+![alt text](image-3.png)
+
+---
+
+## 2. Configuración base
+
+```
+server.port=8080
+api.base-url=http://localhost:8081
+
+spring.thymeleaf.cache=false
+
+# H2 en memoria para usuarios/roles de la app MVC
+spring.datasource.url=jdbc:h2:mem:mvc-users;DB_CLOSE_DELAY=-1;MODE=PostgreSQL
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=sa
+spring.jpa.hibernate.ddl-auto=create-drop
+spring.h2.console.enabled=true
+
+# Espera a que Hibernate cree las tablas, y solo después ejecuta los scripts SQL
+spring.jpa.defer-datasource-initialization=true
+
+```
+
+**MODE=PostgreSQL**
+
+Estás desarrollando o probando localmente con H2, pero tu base de datos real (en producción o en otro módulo) es PostgreSQL,y quieres asegurar compatibilidad SQL entre ambas.
+
+**spring.thymeleaf.cache=false**
+
+Desactiva la caché de plantillas Thymeleaf.
+Por defecto, Spring Boot cachea las vistas para mejorar el rendimiento (especialmente en producción).
+
+Cuando cache=true (valor por defecto):
+- Cada vez que se renderiza una vista, Spring no vuelve a leer el archivo HTML, sino que usa una versión precompilada en memoria.
+- Esto hace que si modificas el HTML mientras la aplicación está ejecutándose, los cambios no se ven hasta reiniciar el servidor.
+
+
+Para entorno desarrollo ideal tenerlo a false!!!! se actualiza siempre y no hay que reiniciar!!!!
+---
+
+## 3. Consigurar e implementar Seguridad y Autenticación
+
+Sigue las instrucciones del profesor
+
+## 4. Vistas base
+
+Tres páginas base:
+
+- Página raíz (/) — bienvenida o home.
+- Página de login (/login) — formulario de autenticación.
+- Página de error (/error) — para errores generales o acceso denegado
+- Página de escritorio (/dashboard)
+
+
+Descarga las vistas para trabajar con ellas. Están en recursos.
+
 ---
 
 ## Funcionalidades principales
@@ -222,6 +350,10 @@ Panel de administración /admin con opciones para:
     - Los datos se obtienen mediante endpoints avanzados del API REST y se presentan en tablas o gráficos (por ejemplo, con Chart.js).
 
 ---
+
+
+
+
 
 # 3. Dockerizar todo el entorno
 `
