@@ -87,6 +87,13 @@ Es importante recordar que, aunque las operaciones derivadas del nombre del mét
 
 ## Consultas personalizadas
 
+| Caso                                       | Recomendación                                                        |
+| ------------------------------------------ | -------------------------------------------------------------------- |
+| Consultas simples basadas en propiedades   | Usa **nombres de método** (`findBy...`, `existsBy...`, `countBy...`) |
+| Consultas complejas o SQL nativo           | Usa **`@Query`**                                                     |
+| Consultas dinámicas con filtros opcionales | Considera **`Query by Example` (QBE)** o **`Specification`**         |
+
+
 Si bien las operaciones derivadas del nombre del método son poderosas y cubren una gran cantidad de casos de uso comunes, hay momentos en que se necesita un mayor control sobre la consulta de la base de datos. Para estos casos, Spring Data JPA proporciona una forma de especificar consultas personalizadas a través de la anotación @Query.
 
 La anotación @Query se puede utilizar para especificar una consulta JPQL (Java Persistence Query Language) que será ejecutada. La consulta puede hacer referencia a los parámetros del método utilizando un índice basado en 1 precedido por un signo de interrogación.
