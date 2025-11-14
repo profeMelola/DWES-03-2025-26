@@ -50,18 +50,44 @@ Trabajarás con:
 
 ## Configuración de la BD H2 (persistente)
 
-```properties
-spring.datasource.url=jdbc:h2:file:./data/foodexpressdb;DB_CLOSE_ON_EXIT=FALSE;AUTO_RECONNECT=TRUE
+Basta con configurar la URL del datasource con jdbc:h2:file:
+Spring Boot creará automáticamente el archivo de BD la primera vez que arranques la aplicación.
+
+```
+spring.datasource.url=jdbc:h2:file:./data/foodexpress-db;AUTO_SERVER=TRUE
+spring.datasource.driverClassName=org.h2.Driver
 spring.datasource.username=sa
 spring.datasource.password=
-spring.datasource.driver-class-name=org.h2.Driver
-spring.jpa.hibernate.ddl-auto=validate
+spring.jpa.hibernate.ddl-auto=create
+spring.sql.init.mode=always
 spring.jpa.show-sql=true
+
 spring.h2.console.enabled=true
 spring.h2.console.path=/h2-console
+
 ```
 
+| Propiedad                            | Función                                                      |
+| ------------------------------------ | ------------------------------------------------------------ |
+| `jdbc:h2:file:./data/foodexpress-db` | Crea o usa BD física en `./data/` dentro del proyecto        |
+| `AUTO_SERVER=TRUE`                   | Evita errores de “locked file” si accedes desde H2 Console   |
+| `ddl-auto=create`                    | Re-crea tablas al arrancar → carga `schema.sql` y `data.sql` |
+| `spring.sql.init.mode=always`        | Ejecuta tu `data.sql` aunque haya BD física                  |
+| `h2-console.enabled=true`            | Acceso por navegador para inspección                         |
+
+
 **No se borra** entre ejecuciones.
+
+---
+
+## Si usamos Gradle para montar el API
+
+```
+implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+```
 
 ---
 
