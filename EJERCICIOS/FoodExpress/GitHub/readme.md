@@ -10,33 +10,47 @@
 
 Abre IntelliJ y carga el proyecto que ya tenías hecho.
 
-## Paso 3: Inicializar Git en IntelliJ
+## Paso 3: Inicializar Git en IntelliJ (si tu proyecto no está integrado con Git )
 
 En IntelliJ:
 
-- Menú VCS → Enable Version Control Integration.
+- Menú VCS → Enable Version Control Integration. Solo saldrá esta opción si el proyecto no es Git.
 - Elige Git.
+
+![alt text](image-5.png)
 
 Ahora tu proyecto ya está bajo Git.
 
 ## Paso 4: Hacer el primer commit
 
-- Abre Commit (abajo a la izquierda o con Ctrl+K).
+- Abre Commit.
 - Selecciona todos los archivos.
 - Escribe un mensaje: "Primer commit del proyecto"
 - Pulsa Commit.
 
+![alt text](image.png)
+
 ## Paso 5: Conectar tu repositorio local con GitHub
 
 - Menú Git → Manage Remotes.
+
+![alt text](image-1.png)
+
 - Añade un nuevo remoto con la URL de GitHub.
 - Aceptar.
+
+![alt text](image-2.png)
+
 
 ## Paso 6: Hacer Push al remoto
 
 - Menú Git → Push.
 - IntelliJ mandará tu proyecto al repositorio en GitHub.
 - ¡Ya está online en tu repositorio!
+
+![alt text](image-3.png)
+
+![alt text](image-4.png)
 
 ---
 
