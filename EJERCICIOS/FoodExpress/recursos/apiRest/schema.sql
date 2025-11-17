@@ -1,50 +1,50 @@
-CREATE TABLE roles (
+CREATE TABLE IF NOT EXISTS roles (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(50) NOT NULL UNIQUE
+    name VARCHAR(50) NOT NULL UNIQUE
 );
 
-CREATE TABLE usuarios (
+CREATE TABLE IF NOT EXISTS users (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
-    nombre VARCHAR(100) NOT NULL,
+    full_name VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL,
-    rol_id BIGINT NOT NULL,
-    FOREIGN KEY (rol_id) REFERENCES roles(id)
+    role_id BIGINT NOT NULL,
+    FOREIGN KEY (role_id) REFERENCES roles(id)
 );
 
-CREATE TABLE restaurantes (
+CREATE TABLE IF NOT EXISTS restaurants (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    direccion VARCHAR(150),
-    telefono VARCHAR(20)
+    name VARCHAR(100) NOT NULL,
+    address VARCHAR(150),
+    phone VARCHAR(20)
 );
 
-CREATE TABLE platos (
+CREATE TABLE IF NOT EXISTS dishes (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    precio DECIMAL(8,2) NOT NULL,
-    categoria VARCHAR(50),
-    restaurante_id BIGINT NOT NULL,
-    FOREIGN KEY (restaurante_id) REFERENCES restaurantes(id)
+    name VARCHAR(100) NOT NULL,
+    price DECIMAL(8,2) NOT NULL,
+    category VARCHAR(50),
+    restaurant_id BIGINT NOT NULL,
+    FOREIGN KEY (restaurant_id) REFERENCES restaurants(id)
 );
 
-CREATE TABLE pedidos (
+CREATE TABLE IF NOT EXISTS orders (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    fecha TIMESTAMP NOT NULL,
-    estado VARCHAR(30) NOT NULL,
-    usuario_id BIGINT NOT NULL,
-    restaurante_id BIGINT NOT NULL,
-    FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
-    FOREIGN KEY (restaurante_id) REFERENCES restaurantes(id)
+    order_date TIMESTAMP NOT NULL,
+    status VARCHAR(30) NOT NULL,
+    user_id BIGINT NOT NULL,
+    restaurant_id BIGINT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (restaurant_id) REFERENCES restaurants(id)
 );
 
-CREATE TABLE detalles_pedido (
-    pedido_id BIGINT NOT NULL,
-    plato_id BIGINT NOT NULL,
-    cantidad INT NOT NULL,
+CREATE TABLE IF NOT EXISTS order_details (
+    order_id BIGINT NOT NULL,
+    dish_id BIGINT NOT NULL,
+    quantity INT NOT NULL,
     subtotal DECIMAL(8,2) NOT NULL,
-    PRIMARY KEY (pedido_id, plato_id),
-    FOREIGN KEY (pedido_id) REFERENCES pedidos(id),
-    FOREIGN KEY (plato_id) REFERENCES platos(id)
+    PRIMARY KEY (order_id, dish_id),
+    FOREIGN KEY (order_id) REFERENCES orders(id),
+    FOREIGN KEY (dish_id) REFERENCES dishes(id)
 );
