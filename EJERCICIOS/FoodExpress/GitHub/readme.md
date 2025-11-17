@@ -1,3 +1,44 @@
+# Glosario de términos. Git y GitHub
+
+![alt text](image-6.png)
+
+## Glosario de términos comunes de Git y GitHub
+
+| Término | Tipo | Descripción |
+|--------|------|-------------|
+| **Repository (Repo)** | Git | Carpeta que contiene el proyecto y su historial de versiones. |
+| **Working Directory** | Git | Directorio local donde editas los archivos. |
+| **Staging Area (Index)** | Git | Zona donde se preparan los cambios antes del commit. |
+| **HEAD** | Git | Puntero que indica la rama o commit actual. |
+| **Commit** | Git | Registro de cambios confirmado en el historial. |
+| **Add / Stage** | Git | Añadir cambios al área de preparación (`git add`). |
+| **Checkout** | Git | Cambiar de rama o restaurar archivos. |
+| **Reset** | Git | Mover el HEAD y deshacer cambios en staging o working directory. |
+| **Revert** | Git | Crear un commit que deshace otro sin borrar historial. |
+| **Branch** | Git | Línea independiente de desarrollo. |
+| **Merge** | Git | Combinar el contenido de dos ramas. |
+| **Rebase** | Git | Reescribir la historia aplicando commits sobre otra base. |
+| **Conflict** | Git | Conflicto que ocurre cuando Git no puede fusionar cambios automáticamente. |
+| **Remote** | Git | Repositorio alojado en GitHub u otro servidor. |
+| **Clone** | Git | Descargar un repositorio remoto a tu máquina. |
+| **Fetch** | Git | Obtener cambios remotos sin fusionarlos aún. |
+| **Pull** | Git | Obtener y fusionar cambios remotos (`fetch + merge`). |
+| **Push** | Git | Enviar tus commits al repositorio remoto. |
+| **Sync** | GitHub Desktop | Combina pull + push automáticamente. |
+| **Tag** | Git | Marcador para identificar versiones (`v1.0.0`). |
+| **Fork** | GitHub | Copia de un repo para trabajar en tu propia cuenta. |
+| **Pull Request (PR)** | GitHub | Solicitud para fusionar cambios en otra rama o repositorio. |
+| **Issues** | GitHub | Sistema de seguimiento de tareas y bugs. |
+| **Actions** | GitHub | Automatización (CI/CD) para pruebas, builds y despliegues. |
+| **Gist** | GitHub | Fragmentos de código o notas rápidas alojadas en GitHub. |
+| **.gitignore** | Git | Archivo que indica qué elementos ignorar. |
+| **Stash** | Git | Guardar temporalmente cambios sin hacer commit. |
+| **Diff** | Git | Mostrar diferencias entre archivos, commits o ramas. |
+
+
+---
+# EXPLICACIÓN DE DOS USOS DIFERENTES
+
 # 1. Subir un proyecto existente a GitHub usando IntelliJ (método gráfico)
 
 ## Paso 1: Crear un repositorio vacío en GitHub
