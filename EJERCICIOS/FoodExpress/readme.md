@@ -26,7 +26,7 @@ Trabajarás con:
 
 ## Proyecto Gradle
 
-Gradle es una herramienta de automatización de compilación de código abierto que simplifica tareas de desarrollo como compilar, probar y empaquetar software. 
+**Gradle** es una herramienta de automatización de compilación de código abierto que simplifica tareas de desarrollo como compilar, probar y empaquetar software. 
 
 Es muy utilizado en el ecosistema de Android y en proyectos Java, Groovy y Scala. 
 
@@ -102,7 +102,7 @@ spring.h2.console.path=/h2-console
 | ------------------------------------ | ------------------------------------------------------------ |
 | `jdbc:h2:file:./data/foodexpress-db` | Crea o usa BD física en `./data/` dentro del proyecto        |
 | `AUTO_SERVER=TRUE`                   | Evita errores de “locked file” si accedes desde H2 Console   |
-| `ddl-auto=validate`                  | Carga `schema.sql` y `data.sql` ; valida entidades           |
+| `ddl-auto=validate`                  | Carga `schema.sql` y `data.sql` ; valida entidades contra BD |
 | `spring.sql.init.mode=always`        | Ejecuta tu `data.sql` aunque haya BD física                  |
 | `h2-console.enabled=true`            | Acceso por navegador para inspección                         |
 
@@ -115,9 +115,22 @@ spring.h2.console.path=/h2-console
 
 ---
 
+Una vez que se ha creado la BD y cargado datos, desconfiguramos la ejecución de los script sql:
+
+```
+# spring.sql.init.mode=always
+```
+
 ## Si usamos Gradle para montar el API
 
-**Dependiencias para JWT:**
+**Dependencia para Spring Security:**
+
+```
+implementation 'org.springframework.boot:spring-boot-starter-security'
+
+```
+
+**Dependiencias para JJWT:**
 
 ```
 implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
@@ -126,6 +139,19 @@ runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 
 ```
 
+Podríamos usar **OAuth2** y **Spring Authorization Server**.
+
+Tu API ya no generaría JWT “a mano”.
+
+Spring Authorization Server:
+- genera tokens JWT firmados automáticamente
+- valida tokens
+- gestiona expiración
+- gestiona cliente, scopes
+- implementa flujos OAuth2
+
+Y tu API se convierte en:
+- Resource Server (valida tokens)
 ---
 
 ## Endpoints principales
@@ -420,9 +446,6 @@ Panel de administración /admin con opciones para:
 ---
 
 
-
-
-
 # 3. Dockerizar todo el entorno
 `
 Un docker-compose.yml con 3 contenedores principales:
@@ -432,3 +455,48 @@ Un docker-compose.yml con 3 contenedores principales:
 | 🧩 **foodexpress-api** | La API REST (Spring Boot, puerto 8081). Expone endpoints REST + JWT + JPA.        | `openjdk:21-jdk-slim`     |
 | 🌐 **foodexpress-web** | La aplicación MVC (Thymeleaf, puerto 8080). Consume la API vía HTTP.              | `openjdk:21-jdk-slim`     |
 | 🗄️ **foodexpress-db** | Base de datos relacional persistente (reemplaza H2) → **PostgreSQL** o **MySQL**. | `postgres:16` / `mysql:8` |
+
+---
+
+# 4. Microservicios
+
+| Tema            | API REST (monolito) | Microservicios            |
+| --------------- | ------------------- | ------------------------- |
+| Nº aplicaciones | 1                   | Muchas ✖                  |
+| BD              | Una                 | Una por servicio          |
+| Seguridad       | Simple              | Compleja (gateway + auth) |
+| Comunicación    | Interna, rápida     | HTTP, eventos             |
+| Escalado        | Completo            | Por servicio              |
+| Deploy          | Muy fácil           | Complejo                  |
+| Complejidad     | Baja                | Alta                      |
+
+
+```
+                    +-----------------------------+
+                    |    API Gateway (Spring)     |
+                    |  http://api.foodexpress.com |
+                    +-------------+---------------+
+                                  |
+    -----------------------------------------------------------------
+    |               |                   |                  |
+    v               v                   v                  v
++---------+   +-----------+     +----------------+   +-----------------+
+| Auth    |   | Users     |     | Restaurants    |   | Orders          |
+| Service |   | Service   |     | Service        |   | Service         |
++---------+   +-----------+     +----------------+   +-----------------+
+| JWT     |   | CRUD users|     | CRUD restaurants|  | Gestion pedidos |
+| issuing |   | Roles     |     | Menús / dishes |   | Estado pedidos  |
++---------+   +-----------+     +----------------+   +-----------------+
+     |                                                  |
+     |        +------------------------+                 |
+     |        | Notification Service   | <---------------+
+     |        +------------------------+    Envía eventos (Kafka/Rabbit)
+
+```
+
+Cada microservicio tiene su propia BD:
+
+```
+auth_db      users_db      restaurants_db      orders_db      notifications_db
+
+```
