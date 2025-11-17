@@ -276,7 +276,7 @@ El proyecto está diseñado para aprender y practicar:
 
 ## 1. Dependencias
 
-![alt text](image-3.png)
+![alt text](image-5.png)
 
 ---
 
@@ -314,12 +314,17 @@ Cuando cache=true (valor por defecto):
 - Esto hace que si modificas el HTML mientras la aplicación está ejecutándose, los cambios no se ven hasta reiniciar el servidor.
 
 
-Para entorno desarrollo ideal tenerlo a false!!!! se actualiza siempre y no hay que reiniciar!!!!
+Para entorno desarrollo ideal tenerlo a false. Se actualiza siempre y no hay que reiniciar.
+
 ---
 
 ## 3. Consigurar e implementar Seguridad y Autenticación
 
-Sigue las instrucciones del profesor
+Sigue las instrucciones del profesor...
+
+![alt text](image-6.png)
+
+---
 
 ## 4. Vistas base
 
@@ -328,7 +333,7 @@ Tres páginas base:
 - Página raíz (/) — bienvenida o home.
 - Página de login (/login) — formulario de autenticación.
 - Página de error (/error) — para errores generales o acceso denegado
-- Página de escritorio (/dashboard)
+- Página de escritorio (/dashboard) - página escritorio o hom
 
 
 Descarga las vistas para trabajar con ellas. Están en recursos.
@@ -339,8 +344,8 @@ Descarga las vistas para trabajar con ellas. Están en recursos.
 
 ### Autenticación y seguridad
 
-- Formulario de login (/login) autenticado contra la API (/auth/login).
-- Obtención y almacenamiento del token JWT en sesión.
+- Formulario de login (/login) autenticado contra BD H2.
+- Uso de sesiones.
 - Acceso a las vistas condicionado por el rol (ADMIN, CLIENTE, REPARTIDOR).
 - Logout con limpieza de sesión.
 
