@@ -126,7 +126,11 @@ Una vez que se ha creado la BD y cargado datos, desconfiguramos la ejecución de
 **Dependencia para Spring Security:**
 
 ```
-implementation 'org.springframework.boot:spring-boot-starter-security'
+// En el archivo build.gradle
+dependencies {
+    // ... otras dependencias
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+}
 
 ```
 
