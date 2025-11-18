@@ -143,6 +143,12 @@ runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
 
 ```
 
+**Dependencia para leer .env:**
+
+```
+implementation 'me.paulschwarz:spring-dotenv:4.0.0'
+``
+
 Podríamos usar **OAuth2** y **Spring Authorization Server**.
 
 Tu API ya no generaría JWT “a mano”.
