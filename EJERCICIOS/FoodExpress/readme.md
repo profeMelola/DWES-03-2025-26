@@ -147,7 +147,7 @@ runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
 
 ```
 implementation 'me.paulschwarz:spring-dotenv:4.0.0'
-``
+```
 
 Podríamos usar **OAuth2** y **Spring Authorization Server**.
 
