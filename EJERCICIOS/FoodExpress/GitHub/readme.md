@@ -134,6 +134,7 @@ Cada alumno debe crear su propia copia (fork).
             - El proceso del merge queda en el fork del alumno y no afecta a nadie más.
 
 
+```
                  ┌──────────────────────────┐
                  │      REPOSITORIO         │
                  │     DEL PROFESOR         │
@@ -192,6 +193,7 @@ PROYECTO LOCAL                              ▼
                        ▼
         Alumno sigue trabajando normalmente
 
+```                 
 
 ## Trabajar en la rama dev (colaboración)
 
