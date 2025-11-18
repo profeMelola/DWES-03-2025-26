@@ -111,7 +111,89 @@ Cada alumno debe crear su propia copia (fork).
 2. Pega la URL de tu fork (no el del profesor).
 3. IntelliJ descargará el proyecto.
 
-## Trabajar en la rama development (colaboración)
+
+**Flujo actual:**
+
+- El profesor tu repositorio principal.
+- Los alumnos hacen fork.
+- Los alumnos clonan su fork en local.
+- El profesor avanza en el código → commit + push.
+- Los alumnos sincronizan su fork (con “Sync fork” en GitHub) para recibir tus cambios.
+- Los alumnos actualizan local → "update branch"
+    - Caso A: No hay conflictos
+        - GitHub actualiza el fork sin problema.
+        - Es lo normal si el alumno solo añadió cosas en archivos que tú no tocaste.
+    - Caso B: Hay conflictos
+        - En cuanto modifiquen su proyecto (aunque sea una línea), al hacer “Sync fork” y luego pull tendrán conflictos si su código difiere del tuyo.
+        - GitHub indicará "This branch is out-of-date with the upstream repository and has conflicts.”
+        - Ofrecerá algo así: resolve conflicts, compare changes, create a merge commit...
+        - El alumno decidirá:
+            - Quedarse con el código del profesor y descartar el suyo.
+            - Mantener el código suyo y descartar el del profesor.
+            - Combinar ambos manualmente.
+            - El proceso del merge queda en el fork del alumno y no afecta a nadie más.
+
+
+                 ┌──────────────────────────┐
+                 │      REPOSITORIO         │
+                 │     DEL PROFESOR         │
+                 │     (ORIGINAL / MAIN)    │
+                 └───────────┬──────────────┘
+                             │
+                             │ 1. Los alumnos hacen FORK
+                             ▼
+        ┌────────────────────────────┐
+        │  REPOSITORIO DE CADA ALUMNO│
+        │          (FORK)            │
+        └───────────────┬────────────┘
+                        │
+                        │ 2. Clone en local
+                        ▼
+           ┌──────────────────────────┐
+           │     PROYECTO LOCAL       │
+           │  (Alumno en IntelliJ)    │
+           └───────┬──────────────────┘
+                   │
+       ┌───────────┼──────────────────────────┐
+       │           │                          │
+  3A. Alumno   3B. Alumno sincroniza      3C. Alumno
+  programa      cambios del profesor       hace commits
+  en clase       desde GitHub               y push a su fork
+       │           │                          │
+       └────┬──────┘                          │
+            │                                  │
+            ▼                                  │
+   ┌───────────────────────┐                   │
+   │  Sincronizar fork     │                   │
+   │ (“Sync fork / Update”)│                   │
+   └───────┬───────────────┘                   │
+           │                                    │
+     4. GitHub intenta                          │
+        fusionar cambios                        │
+           │                                    │
+   ┌───────┴───────────────────────────────┐
+   │                                       │
+   ▼                                       ▼
+SIN CONFLICTOS                          CON CONFLICTOS
+(Merge automático)                     (GitHub pide resolver)
+   │                                       │
+   ▼                                       ▼
+ Fork actualizado                  Alumno revisa diferencias
+   │                               Decide si:
+   │                               - se queda con lo suyo
+   │                               - se queda con lo del profe
+   │                               - combina ambos
+   ▼                                       │
+PROYECTO LOCAL                              ▼
+`git pull` desde fork                 Fork actualizado
+   │                                       │
+   └───────────────────────────────────────┘
+                       │
+                       ▼
+        Alumno sigue trabajando normalmente
+
+
+## Trabajar en la rama dev (colaboración)
 
 El profesor tendrá una rama llamada development.
 
