@@ -121,6 +121,19 @@ Una vez que se ha creado la BD y cargado datos, desconfiguramos la ejecución de
 # spring.sql.init.mode=always
 ```
 
+--- 
+
+## Actualización de los script SQL
+
+Poner a todos los usuarios la contreña "melola" encriptada.
+
+```
+-- password = melola (encriptada con bcrypt)
+UPDATE users SET password = '$2a$10$IKp9rdPtsq4/L28Ivj85yOI0nyTRwKX1fHZfXDAKRePHQUD2vATGK';
+```
+
+--- 
+
 ## Si usamos Gradle para montar el API
 
 **Dependencia para Spring Security:**
@@ -148,6 +161,9 @@ runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
 ```
 implementation 'me.paulschwarz:spring-dotenv:4.0.0'
 ```
+
+
+<font color="red">CUIDADO CON GRADLE!!!</font> ![alt text](image-10.png)![alt text](image-9.png)
 
 Podríamos usar **OAuth2** y **Spring Authorization Server**.
 
