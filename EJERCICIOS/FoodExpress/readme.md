@@ -163,9 +163,12 @@ implementation 'me.paulschwarz:spring-dotenv:4.0.0'
 ```
 
 
-<font color="red">CUIDADO CON GRADLE!!!</font> ![alt text](image-10.png)![alt text](image-9.png)
+### CUIDADO CON GRADLE!!! ![alt text](image-10.png)![alt text](image-9.png)
 
-Podríamos usar **OAuth2** y **Spring Authorization Server**.
+
+--- 
+
+## Podríamos usar **OAuth2** y **Spring Authorization Server**.(no aplica)
 
 Tu API ya no generaría JWT “a mano”.
 
