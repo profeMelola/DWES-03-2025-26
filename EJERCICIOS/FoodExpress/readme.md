@@ -8,8 +8,8 @@ Glovo.
 
 Entorno completo con dos apps Spring:
 
-- FoodExpress API (ya la tienes): REST + JPA + JWT.
-- FoodExpress Web MVC: aplicación Spring Boot MVC + Thymeleaf que consume la API.
+- **FoodExpress API:** REST + JPA + JWT.
+- **FoodExpress Web MVC:** aplicación Spring Boot MVC + Thymeleaf que consume la API.
 
 
 # 1. FoodExpress API Rest
@@ -21,10 +21,11 @@ Trabajarás con:
 - H2 persistente en disco
 - JPA avanzado
 - Paginación
+- ...
 
 ---
 
-## Proyecto Gradle
+## 1.1. Proyecto con Gradle: solo con endpoint público GET /api/restaurants (finalmente haremos el proyecto completo con Maven)
 
 **Gradle** es una herramienta de automatización de compilación de código abierto que simplifica tareas de desarrollo como compilar, probar y empaquetar software. 
 
@@ -42,6 +43,10 @@ Se utiliza para scripting, automatización, desarrollo web y para extender aplic
 
 No es lo mismo el JDK para compilar el proyecto que el JDK que ejecuta Gradle!!!
 
+✔ JDK 21 (si tu versión de Gradle es ≥ 8.6)
+
+✔ JDK 17 (100% compatible con todas)
+
 ![alt text](image-7.png)
 
 **En build.gradle:**
@@ -54,8 +59,48 @@ java {
 }
 ```
 
+**Dependencia para Spring Security:**
 
-## Modelo de datos
+```
+// En el archivo build.gradle
+dependencies {
+    // ... otras dependencias
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+}
+
+```
+
+**Dependiencias para JJWT:**
+
+```
+implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
+runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
+runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
+
+```
+
+**Dependencia para leer .env:**
+
+```
+implementation 'me.paulschwarz:spring-dotenv:4.0.0'
+```
+
+
+### CUIDADO CON GRADLE!!! 
+
+Gradle ejecuta test automáticamente y al añadir la dependencia de Spring Security hay algo que no tenemos para que pasen esos test "No qualifying bean of type AuthenticationManager".
+
+Por ahora dejamos el proyecto Gradle para avanzar en el resto de funcionalidades.
+
+
+![alt text](image-10.png)![alt text](image-9.png)
+
+---
+
+## 1.2. Proyecto con Maven
+
+
+### Modelo de datos
 
 | Entidad | Descripción |
 |----------|--------------|
@@ -79,7 +124,7 @@ java {
 
 ---
 
-## Configuración de la BD H2 (persistente)
+### Configuración de la BD H2 (persistente)
 
 Basta con configurar la URL del datasource con jdbc:h2:file:
 Spring Boot creará automáticamente el archivo de BD la primera vez que arranques la aplicación.
@@ -123,7 +168,15 @@ Una vez que se ha creado la BD y cargado datos, desconfiguramos la ejecución de
 
 --- 
 
-## Actualización de los script SQL
+### Scripts SQL
+
+- schema.sql
+- data.sql
+
+Los nombres por defecto que reconoce Spring son schema.sql y data.sql.
+Esto evita tener que configurar unas propiedades para indicar otros nombres de scripts sql y además garantiza que primero se ejecute schema.sql (creando las tablas) y después data.sql (insertando datos de prueba).
+
+**Actualización de los script SQL**
 
 Poner a todos los usuarios la contreña "melola" encriptada.
 
@@ -132,59 +185,9 @@ Poner a todos los usuarios la contreña "melola" encriptada.
 UPDATE users SET password = '$2a$10$IKp9rdPtsq4/L28Ivj85yOI0nyTRwKX1fHZfXDAKRePHQUD2vATGK';
 ```
 
---- 
-
-## Si usamos Gradle para montar el API
-
-**Dependencia para Spring Security:**
-
-```
-// En el archivo build.gradle
-dependencies {
-    // ... otras dependencias
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-}
-
-```
-
-**Dependiencias para JJWT:**
-
-```
-implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
-runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
-runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
-
-```
-
-**Dependencia para leer .env:**
-
-```
-implementation 'me.paulschwarz:spring-dotenv:4.0.0'
-```
-
-
-### CUIDADO CON GRADLE!!! ![alt text](image-10.png)![alt text](image-9.png)
-
-
---- 
-
-## Podríamos usar **OAuth2** y **Spring Authorization Server**.(no aplica)
-
-Tu API ya no generaría JWT “a mano”.
-
-Spring Authorization Server:
-- genera tokens JWT firmados automáticamente
-- valida tokens
-- gestiona expiración
-- gestiona cliente, scopes
-- implementa flujos OAuth2
-
-Y tu API se convierte en:
-- Resource Server (valida tokens)
 ---
 
-## Endpoints principales
-
+### ENDPOINTS
 
 ### Autenticación (JWT)
 
@@ -323,6 +326,23 @@ Y tu API se convierte en:
 | `ADMIN` | CRUD completo + reportes |
 | `CLIENTE` | Crear y consultar sus pedidos |
 | `REPARTIDOR` | Ver y actualizar pedidos asignados |
+
+
+--- 
+
+## Info adicional en cuanto seguridad. Podríamos usar **OAuth2** y **Spring Authorization Server**.(no aplica)
+
+Tu API ya no generaría JWT “a mano”.
+
+Spring Authorization Server:
+- genera tokens JWT firmados automáticamente
+- valida tokens
+- gestiona expiración
+- gestiona cliente, scopes
+- implementa flujos OAuth2
+
+Y tu API se convierte en:
+- Resource Server (valida tokens)
 
 ---
 
