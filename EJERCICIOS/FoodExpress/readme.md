@@ -382,7 +382,18 @@ El proyecto está diseñado para aprender y practicar:
 | **H2 / API REST FoodExpress**  | Fuente de datos (la API expone la información). |
 | **JWT (JSON Web Token)**       | Autenticación entre las dos aplicaciones.       |
 
-![alt text](image-4.png)
+
+![alt text](image-14.png)
+
+![alt text](image-15.png)
+
+![alt text](image-16.png)
+
+![alt text](image-17.png)
+
+![alt text](image-18.png)
+
+![alt text](image-19.png)
 
 ---
 
