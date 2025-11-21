@@ -39,8 +39,12 @@
                 <div class="card-body text-center">
                     <img src="https://cdn-icons-png.flaticon.com/512/1046/1046784.png" alt="Restaurants" width="80" class="mb-3">
                     <h5 class="card-title">Restaurants</h5>
-                    <p class="card-text text-muted">List all available restaurants from FoodExpress API.</p>
-                    <a href="#" class="btn btn-outline-primary disabled">View</a>
+                    <!--<p class="card-text text-muted">List all available restaurants from FoodExpress API.</p>-->
+                    <p class="card-text text-muted">Manage Restaurants</p>
+                    <!--<a href="#" class="btn btn-outline-primary disabled">View</a>-->
+                    <!--<a th:href="@{/restaurants}" class="btn btn-outline-primary">View</a>-->
+                    <a th:href="@{/restaurants/menu}" class="btn btn-outline-primary">View</a>
+
                 </div>
             </div>
         </div>
@@ -52,7 +56,7 @@
                     <img src="https://cdn-icons-png.flaticon.com/512/2921/2921822.png" alt="Dishes" width="80" class="mb-3">
                     <h5 class="card-title">Dishes</h5>
                     <p class="card-text text-muted">Browse dishes once the API connection is ready.</p>
-                    <a href="#" class="btn btn-outline-secondary disabled">View</a>
+                    <a th:href="@{/dishes}" class="btn btn-outline-primary">View</a>
                 </div>
             </div>
         </div>

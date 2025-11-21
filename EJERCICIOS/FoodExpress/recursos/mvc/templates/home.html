@@ -50,11 +50,18 @@
 
         <div class="d-flex justify-content-center gap-3" th:if="${#authorization.expression('isAuthenticated()')}">
             <h2>Bienvenido, <span th:text="${#authentication.name}"></span> !</h2>
-            <a th:href="@{/logout}" style="color: darkmagenta">Cerrar sesión</a>
+            <!--<a th:href="@{/logout}" style="color: darkmagenta">Cerrar sesión</a>-->
+            <!-- NO SE PERMITE GET PARA LOGOUT, SE USA FORM EN SU LUGAR. MIRA SECURITYCONFIG. NO HACE FALTA ENDPOINT EXTRA -->
+            <!-- GET NO FUNCIONA PARA LOGOUT POR SEGURIDAD, SOLO POST, PARA PROTEGER DE ATAQUES CSRF -->
+            <form th:action="@{/logout}" method="post" class="d-inline">
+                <button type="submit" class="btn btn-link p-0" style="color: darkmagenta;">Cerrar sesión</button>
+            </form>
+
         </div>
 
         <div class="d-flex justify-content-center gap-3" th:unless="${#authorization.expression('isAuthenticated()')}">
             <a th:href="@{/login}" class="btn btn-light btn-custom">Iniciar Sesión</a>
+
         </div>
 
     </div>

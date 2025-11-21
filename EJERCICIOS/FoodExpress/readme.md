@@ -231,7 +231,7 @@ UPDATE users SET password = '$2a$10$IKp9rdPtsq4/L28Ivj85yOI0nyTRwKX1fHZfXDAKRePH
 
 | Método | Endpoint | Descripción |
 |--------|-----------|-------------|
-| `GET` | `/api/restaurants` | Lista paginada de restaurantes |
+| `GET` | `/api/restaurants` | Lista de restaurantes |
 | `GET` | `/api/restaurants/{id}` | Detalle con platos incluidos |
 | `POST` | `/api/restaurants` | Crear nuevo restaurante *(ADMIN)* |
 | `PUT` | `/api/restaurants/{id}` | Actualizar restaurante *(ADMIN)* |
@@ -240,9 +240,9 @@ UPDATE users SET password = '$2a$10$IKp9rdPtsq4/L28Ivj85yOI0nyTRwKX1fHZfXDAKRePH
 
 | Método   | Endpoint                   | Descripción                               | Cuerpo / Parámetros               | Respuesta                                           |
 | -------- | -------------------------- | ----------------------------------------- | --------------------------------- | --------------------------------------------------- |
-| `GET`    | `/api/restaurants`        | Lista paginada de restaurantes            | `?page=0&size=10&sort=nombre,asc` | `200 OK` → `Page<RestaurantDTO>`                   |
+| `GET`    | `/api/restaurants`        | Lista paginada de restaurantes            |        | `200 OK` → `List<RestaurantDTO>`                   |
 | `GET`    | `/api/restaurants/{id}`   | Detalle de un restaurante                 | `id`                              | `200 OK` → `RestauranteDetalleDTO` (incluye platos) |
-| `POST`   | `/api/restaurants`        | Crea un restaurante *(ADMIN)*             | `RestauranteCreateDTO`            | `201 CREATED` → `RestaurantDTO`                    |
+| `POST`   | `/api/restaurants`        | Crea un restaurante *(ADMIN)*             | `RestauranteDTO`                  | `201 CREATED` → `RestaurantDTO`                    |
 | `PUT`    | `/api/restaurants/{id}`   | Actualiza datos del restaurante *(ADMIN)* | `RestauranteUpdateDTO`            | `200 OK` → `RestaurantDTO`                         |
 | `DELETE` | `/api/restaurants/{id}`   | Elimina restaurante *(ADMIN)*             | `id`                              | `204 NO CONTENT`                                    |
 | `GET`    | `/api/restaurants/find` | Filtro por nombre o zona                  | `?nombre=pizza`                   | `200 OK` → `List<RestaurantDTO>`                   |
@@ -440,19 +440,77 @@ Sigue las instrucciones del profesor...
 
 ## 4. Vistas base
 
-Tres páginas base:
-
-- Página raíz (/) — bienvenida o home.
-- Página de login (/login) — formulario de autenticación.
-- Página de error (/error) — para errores generales o acceso denegado
-- Página de escritorio (/dashboard) - página escritorio o hom
+- / -> home
+- home -> iniciar sesión -> login
+- login -> dashboard
+- dashboard -> Manage Restaurants
+    - List restaurants
+    - Create Restaurant(only admin)
+- dashboard -> List all dishes
+- dashboard -> Orders
 
 
 Descarga las vistas para trabajar con ellas. Están en recursos.
 
+Se irán añadiendo plantillas de Thymeleaf bajo demanda...
+
+
+Vamos a trabajar con plantillas que usan la dependencia **Thymeleaf Extras Spring Security 6.**
+
+```
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity6</artifactId>
+        </dependency>
+```
+
+Esto permite usar en las plantillas expresiones como:
+
+```
+th:if="${#authorization.expression('hasRole(''ADMIN'')')}"
+th:if="${#authorization.expression('hasAuthority(''ORDER_CREATE'')')}"
+th:if="${#authentication.principal.enabled}"
+th:if="${#authentication.isAuthenticated()}"
+
+```
+
+En vez de trabajar directamente con Authentication:
+
+```
+Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+model.addAttribute("isAdmin", auth.getAuthorities().stream()
+        .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN")));
+model.addAttribute("username", auth.getName());
+
+```
+
 ---
 
-## Funcionalidades principales
+## Funcionalidades vistas en clase
+
+- Listar todos los restaurantes.
+- Listar todos los platos (sin paginación).
+- Crear restaurante.
+
+**En el MVC:**
+
+- Solo usuarios con ROLE_ADMIN pueden acceder a /restaurants/create/**.
+- Eso lo controlas en SecurityConfig del MVC.
+
+**En el API:**
+
+- El endpoint POST /api/restaurants exige JWT con rol ADMIN del mundo API.
+- El MVC llama al API con el usuario técnico api_admin (o admin) del mundo API.
+
+![alt text](image-13.png)
+
+--- 
+
+## Todas las funcionalidades posibles 
+
+Las iremos viendo en clase, las que de tiempo...
+
+
 
 ### Autenticación y seguridad
 
@@ -483,7 +541,7 @@ Panel de administración /admin con opciones para:
 - Consultar pedidos y cambiar estado.
 - Visualizar reportes y estadísticas (ventas, top platos, clientes frecuentes, etc.) obtenidos desde la API.
 
-### Reportes y estadísticas (opcional)
+### Reportes y estadísticas 
 
 - Visualización de métricas como:
     - Total de ventas por restaurante.
