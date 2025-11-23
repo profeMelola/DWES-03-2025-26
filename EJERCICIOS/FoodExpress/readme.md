@@ -189,6 +189,23 @@ UPDATE users SET password = '$2a$10$IKp9rdPtsq4/L28Ivj85yOI0nyTRwKX1fHZfXDAKRePH
 
 ### ENDPOINTS
 
+### Primeros endpoints en clase
+
+- GET /api/restaurants → 200 OK (lista vacía o no)
+- GET /api/restaurants/{id}
+    - 200 OK si existe
+    - 404 NOT FOUND si no existe
+- POST /api/restaurants
+    - 201 CREATED si se crea
+    - 400 BAD REQUEST si algo falla en la creación (o lo lanza tu GlobalExceptionHandler)
+- PUT /api/restaurants/{id}
+    - 200 OK si se actualiza
+    - 404 NOT FOUND si no existe
+- DELETE /api/restaurants/{id}
+    - 204 NO CONTENT si se borra
+    - 404 NOT FOUND si no existe
+
+
 ### Autenticación (JWT)
 
 | Método | Endpoint | Descripción |
