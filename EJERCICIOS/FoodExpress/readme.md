@@ -226,6 +226,54 @@ public ResponseEntity<List<RestaurantDTO>> find(
 
 ---
 
+### Funciones de los diferentes perfiles
+
+El modelo de la BD actual contempla las siguientes funcionalidades.
+
+#### ¿Qué hace un usuario ADMIN?
+
+- CRUD completo de restaurantes
+- CRUD completo de platos
+- Ver todos los pedidos
+- Actualizar el estado de cualquier pedido
+
+#### ¿Qué hace un usuario CLIENT?
+
+- Crear pedidos
+- Ver sus propios pedidos
+- Cancelar pedidos en ciertos estados
+
+#### ¿Qué puede hacer un repartidor (DELIVERY)?
+
+La BD actual no tiene una tabla DELIVERY que se relacione con ORDERS (pedidos).
+
+```
+CLIENT → crea un pedido (estado: PENDIENTE)
+RESTAURANTE/ADMIN → pasa a PREPARANDO
+DELIVERY → pasa a RECOGIDO / EN_REPARTO
+DELIVERY → pasa a ENTREGADO
+
+```
+
+- Un repartidor solo puede cambiar el estado de un pedido.
+- No se puede asignar un pedido a un repartidor específico
+- No se puede saber qué repartidor gestionó cada pedido
+- No se pueden listar “mis entregas”
+
+```
+CLIENT → crea un pedido (estado: PENDIENTE)
+RESTAURANTE/ADMIN → pasa a PREPARANDO
+DELIVERY → pasa a RECOGIDO / EN_REPARTO
+DELIVERY → pasa a ENTREGADO
+```
+
+- GET /api/orders?status=PREPARANDO
+- PUT /api/orders/{id}/status
+Body: { "status": "EN_REPARTO" }
+
+
+---
+
 ### Autenticación (JWT)
 
 | Método | Endpoint | Descripción |
