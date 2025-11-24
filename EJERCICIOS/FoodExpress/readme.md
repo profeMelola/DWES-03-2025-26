@@ -207,7 +207,21 @@ UPDATE users SET password = '$2a$10$IKp9rdPtsq4/L28Ivj85yOI0nyTRwKX1fHZfXDAKRePH
     - 404 NOT FOUND si no existe
 - GET /api/restaurants/{id}/dishes
 - POST /api/restaurants/{id}/dishes
-- GET /api/restaurants/{id}/dishes/filter?category=Pasta
+- GET /api/restaurants?name=Burger
+
+```
+@GetMapping
+public ResponseEntity<List<RestaurantDTO>> find(
+        @RequestParam(required = false) String name) {
+
+    List<RestaurantDTO> result =
+            restaurantService.filter(name);
+
+    return ResponseEntity.ok(result);
+}
+```
+
+- GET /api/restaurants/{id}/dishes?category=Pasta
 
 
 ---
@@ -252,72 +266,42 @@ UPDATE users SET password = '$2a$10$IKp9rdPtsq4/L28Ivj85yOI0nyTRwKX1fHZfXDAKRePH
 
 ### Restaurantes
 
-| Método | Endpoint | Descripción |
-|--------|-----------|-------------|
-| `GET` | `/api/restaurants` | Lista de restaurantes |
-| `GET` | `/api/restaurants/{id}` | Detalle con platos incluidos |
-| `POST` | `/api/restaurants` | Crear nuevo restaurante *(ADMIN)* |
-| `PUT` | `/api/restaurants/{id}` | Actualizar restaurante *(ADMIN)* |
-| `DELETE` | `/api/restaurants/{id}` | Eliminar restaurante *(ADMIN)* |
-| `GET` | `/api/restaurants/find?nombre=...` | Buscar por nombre o zona |
+| Método | Endpoint                  | Descripción          | Respuesta    |
+| ------ | ------------------------- | -------------------- | ------------ |
+| GET    | `/api/restaurants`        | Lista paginada       | 200 OK       |
+| GET    | `/api/restaurants/{id}`   | Detalle + platos     | 200 OK / 404 |
+| GET    | `/api/restaurants?name=pizza` | Buscar por nombre    | 200 OK       |
+| POST   | `/api/restaurants`        | Crear *(ADMIN)*      | 201 CREATED  |
+| PUT    | `/api/restaurants/{id}`   | Actualizar *(ADMIN)* | 200 OK / 404 |
+| DELETE | `/api/restaurants/{id}`   | Eliminar *(ADMIN)*   | 204 / 404    |
 
-| Método   | Endpoint                   | Descripción                               | Cuerpo / Parámetros               | Respuesta                                           |
-| -------- | -------------------------- | ----------------------------------------- | --------------------------------- | --------------------------------------------------- |
-| `GET`    | `/api/restaurants`        | Lista paginada de restaurantes            |        | `200 OK` → `List<RestaurantDTO>`                   |
-| `GET`    | `/api/restaurants/{id}`   | Detalle de un restaurante                 | `id`                              | `200 OK` → `RestauranteDetalleDTO` (incluye platos) |
-| `POST`   | `/api/restaurants`        | Crea un restaurante *(ADMIN)*             | `RestauranteDTO`                  | `201 CREATED` → `RestaurantDTO`                    |
-| `PUT`    | `/api/restaurants/{id}`   | Actualiza datos del restaurante *(ADMIN)* | `RestauranteUpdateDTO`            | `200 OK` → `RestaurantDTO`                         |
-| `DELETE` | `/api/restaurants/{id}`   | Elimina restaurante *(ADMIN)*             | `id`                              | `204 NO CONTENT`                                    |
-| `GET`    | `/api/restaurants/find` | Filtro por nombre o zona                  | `?nombre=pizza`                   | `200 OK` → `List<RestaurantDTO>`                   |
 
 ---
 
 ### Platos
 
-| Método | Endpoint | Descripción |
-|--------|-----------|-------------|
-| `GET` | `/api/dishes` | Lista paginada de platos |
-| `GET` | `/api/dishes/{id}` | Obtiene un plato por ID |
-| `GET` | `/api/dishes/category/{category}` | Filtra por categoría |
-| `GET` | `/api/dishes/restaurante/{restaurantId}` | Platos de un restaurante |
-| `POST` | `/api/dishes` | Crear plato *(ADMIN)* |
-| `PUT` | `/api/dishes/{id}` | Actualizar plato *(ADMIN)* |
-| `DELETE` | `/api/dishes/{id}` | Eliminar plato *(ADMIN)* |
-
-| Método   | Endpoint                                  | Descripción                        | Cuerpo / Parámetros               | Respuesta                   |
-| -------- | ----------------------------------------- | ---------------------------------- | --------------------------------- | --------------------------- |
-| `GET`    | `/api/dishes`                             | Lista paginada de platos           | `?page=0&size=5&sort=precio,desc` | `200 OK` → `Page<DishDTO>` |
-| `GET`    | `/api/dishes/{id}`                        | Detalle de un plato                | `id`                              | `200 OK` → `DishDTO`       |
-| `GET`    | `/api/dishes/category/{category}`       | Filtra por categoría (ej. “Pasta”) | `categoria`                       | `200 OK` → `List<DishDTO>` |
-| `GET`    | `/api/dishes/restaurant/{restaurantId}` | Platos de un restaurante           | `restauranteId`                   | `200 OK` → `List<DishDTO>` |
-| `POST`   | `/api/dishes`                             | Crea un nuevo plato *(ADMIN)*      | `PlatoCreateDTO`                  | `201 CREATED` → `DishDTO`  |
-| `PUT`    | `/api/dishes/{id}`                        | Actualiza un plato *(ADMIN)*       | `PlatoUpdateDTO`                  | `200 OK` → `DishDTO`       |
-| `DELETE` | `/api/dishes/{id}`                        | Elimina un plato *(ADMIN)*         | `id`                              | `204 NO CONTENT`            |
-
+| Método | Endpoint                       | Descripción                                    | Respuesta |
+| ------ | ------------------------------ | ---------------------------------------------- | --------- |
+| GET    | `/api/restaurants/{id}/dishes` | Lista platos del restaurante                   | 200 OK    |
+| GET    | `/api/dishes/{dishId}`         | Detalle de plato                               | 200 / 404 |
+| GET    | `/api/dishes`                  | Listado global opcional (paginación/categoría) | 200       |
+| GET    | `/api/dishes?category=Pasta`   | Filtrar por categoría                          | 200       |
+| POST   | `/api/restaurants/{id}/dishes` | Crear plato *(ADMIN)*                          | 201       |
+| PUT    | `/api/dishes/{dishId}`         | Actualizar *(ADMIN)*                           | 200 / 404 |
+| DELETE | `/api/dishes/{dishId}`         | Eliminar *(ADMIN)*                             | 204 / 404 |
 
 ---
 
 ### Pedidos
 
-| Método | Endpoint | Descripción |
-|--------|-----------|-------------|
-| `GET` | `/api/orders` | Lista de pedidos (propios o todos según rol) |
-| `GET` | `/api/orders/{id}` | Detalle completo del pedido |
-| `POST` | `/api/orders` | Crear nuevo pedido *(CLIENTE)* |
-| `PUT` | `/api/orders/{id}/estado` | Cambiar estado *(REPARTIDOR/ADMIN)* |
-| `DELETE` | `/api/orders/{id}` | Cancelar pedido *(CLIENTE)* |
-| `GET` | `/api/orders/usuario/{usuarioId}` | Pedidos por usuario *(ADMIN)* |
-| `GET` | `/api/orders/fecha?desde=...&hasta=...` | Filtrar por rango de fechas |
-
-| Método   | Endpoint                           | Descripción                                            | Cuerpo / Parámetros                            | Respuesta                     |
-| -------- | ---------------------------------- | ------------------------------------------------------ | ---------------------------------------------- | ----------------------------- |
-| `GET`    | `/api/orders`                     | Lista de pedidos (ADMIN: todos, CLIENTE: solo propios) | `?page=0&size=5`                               | `200 OK` → `Page<PedidoDTO>`  |
-| `GET`    | `/api/orders/{id}`                | Detalle del pedido (con platos y totales)              | `id`                                           | `200 OK` → `PedidoDetalleDTO` |
-| `POST`   | `/api/orders`                     | Crea nuevo pedido *(CLIENTE)*                          | `PedidoCreateDTO` con `List<DetallePedidoDTO>` | `201 CREATED` → `PedidoDTO`   |
-| `PUT`    | `/api/orders/{id}/estado`         | Actualiza estado *(ADMIN o REPARTIDOR)*                | `{"estado": "ENTREGADO"}`                      | `200 OK` → `PedidoDTO`        |
-| `DELETE` | `/api/orders/{id}`                | Cancela pedido *(CLIENTE antes de confirmar)*          | `id`                                           | `204 NO CONTENT`              |
-| `GET`    | `/api/orders/usuario/{usuarioId}` | Pedidos de un cliente específico *(ADMIN)*             | `usuarioId`                                    | `200 OK` → `List<PedidoDTO>`  |
-| `GET`    | `/api/orders/fecha`               | Filtro por rango de fechas                             | `?desde=2025-10-01&hasta=2025-10-15`           | `200 OK` → `List<PedidoDTO>`  |
+| Método | Endpoint                     | Descripción                         | Respuesta |
+| ------ | ---------------------------- | ----------------------------------- | --------- |
+| GET    | `/api/orders`                | Lista pedidos                       | 200       |
+| GET    | `/api/orders/{id}`           | Detalle pedido                      | 200/404   |
+| GET    | `/api/users/{userId}/orders` | Pedidos de usuario *(ADMIN)*        | 200       |
+| POST   | `/api/orders`                | Crear pedido *(CLIENTE)*            | 201       |
+| PUT    | `/api/orders/{id}/status`    | Cambiar estado *(ADMIN/REPARTIDOR)* | 200       |
+| DELETE | `/api/orders/{id}`           | Cancelar pedido *(CLIENTE)*         | 204       |
 
 
 ---
