@@ -189,8 +189,9 @@ UPDATE users SET password = '$2a$10$IKp9rdPtsq4/L28Ivj85yOI0nyTRwKX1fHZfXDAKRePH
 
 ### ENDPOINTS
 
-### Primeros endpoints en clase
+### Endpoints trabajados en clase
 
+- POST /auth/login -> 200 OK (token)
 - GET /api/restaurants → 200 OK (lista vacía o no)
 - GET /api/restaurants/{id}
     - 200 OK si existe
@@ -204,7 +205,12 @@ UPDATE users SET password = '$2a$10$IKp9rdPtsq4/L28Ivj85yOI0nyTRwKX1fHZfXDAKRePH
 - DELETE /api/restaurants/{id}
     - 204 NO CONTENT si se borra
     - 404 NOT FOUND si no existe
+- GET /api/restaurants/{id}/dishes
+- POST /api/restaurants/{id}/dishes
+- GET /api/restaurants/{id}/dishes/filter?category=Pasta
 
+
+---
 
 ### Autenticación (JWT)
 
