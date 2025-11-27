@@ -206,8 +206,11 @@ UPDATE users SET password = '$2a$10$IKp9rdPtsq4/L28Ivj85yOI0nyTRwKX1fHZfXDAKRePH
     - 204 NO CONTENT si se borra
     - 404 NOT FOUND si no existe
 - GET /api/restaurants/{id}/dishes
+Devolver todos los platos pertenecientes a un restaurante concreto.
 - POST /api/restaurants/{id}/dishes
+Crear un nuevo plato dentro de un restaurante concreto.
 - GET /api/restaurants?name=Burger
+Buscar restaurantes que contengan en el nombre Burguer
 
 ```
 @GetMapping
