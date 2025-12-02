@@ -630,24 +630,57 @@ Panel de administración /admin con opciones para:
 
 ### A.2. Mejoras
 
-#### Evitar F5-doble-submit. FlashAttributes
+#### Evitar F5-doble-submit (Post–Redirect–Get). FlashAttributes
+
+![alt text](image-20.png)
+
+![alt text](image-21.png)
+
+**Get para mostrar formulario:**
+
+```
+@GetMapping("/create")
+public String showForm(Model model, Principal principal) {
+    model.addAttribute("username", principal.getName());
+    model.addAttribute("restaurant", new RestaurantDTO());
+    model.addAttribute("mode", "create");
+    return "restaurants/restaurant-form";
+}
+
+
+```
+
+
+**POST con PRG (SIN F5 DUPLICADO)**
 
 ```
 @PostMapping("/create")
-public String create(@Valid @ModelAttribute RestaurantDTO dto,
-                     BindingResult result,
-                     RedirectAttributes flash) {
+public String create(
+        @ModelAttribute("restaurant") RestaurantDTO restaurantDTO,
+        RedirectAttributes redirectAttributes) {
 
-    if (result.hasErrors()) {
-        flash.addFlashAttribute("restaurant", dto);
-        flash.addFlashAttribute("errors", result);
-        return "redirect:/restaurants/new"; 
-    }
+    RestaurantDTO saved = restaurantsService.create(restaurantDTO);
 
-    service.save(dto);
-    flash.addFlashAttribute("success", "Restaurant created!");
-    return "redirect:/restaurants";
+    // Se guarda temporalmente para el redirect
+    redirectAttributes.addFlashAttribute("restaurant", saved);
+    redirectAttributes.addFlashAttribute("success", true);
+
+    return "redirect:/restaurants/create-success";
 }
+
+```
+
+**Vista create-success**
+
+```
+<h1>Restaurante creado correctamente</h1>
+
+<div th:if="${success}">
+    <p>Nombre: <span th:text="${restaurant.name}"></span></p>
+    <p>Dirección: <span th:text="${restaurant.address}"></span></p>
+</div>
+
+<a href="/restaurants/create">Crear otro</a>
 
 ```
 
