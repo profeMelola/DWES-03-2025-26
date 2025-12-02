@@ -620,9 +620,152 @@ Panel de administración /admin con opciones para:
     - Los datos se obtienen mediante endpoints avanzados del API REST y se presentan en tablas o gráficos (por ejemplo, con Chart.js).
 
 ---
+# 3.  Siguientes pasos. Spring II
+
+## BLOQUE A
+
+### A.1. Spring I
+- Explicación del examen.
+- Introducción a Testing.
+
+### A.2. Mejoras
+
+#### Evitar F5-doble-submit. FlashAttributes
+
+```
+@PostMapping("/create")
+public String create(@Valid @ModelAttribute RestaurantDTO dto,
+                     BindingResult result,
+                     RedirectAttributes flash) {
+
+    if (result.hasErrors()) {
+        flash.addFlashAttribute("restaurant", dto);
+        flash.addFlashAttribute("errors", result);
+        return "redirect:/restaurants/new"; 
+    }
+
+    service.save(dto);
+    flash.addFlashAttribute("success", "Restaurant created!");
+    return "redirect:/restaurants";
+}
+
+```
+
+#### Componentización. Fragmentos
+
+- restaurant-form.html
+- form-errors.html (fragment)
+
+```
+<div th:replace="~{fragments/form-errors :: error(field='phone')}"></div>
+
+```
 
 
-# 3. Dockerizar todo el entorno
+
+
+## BLOQUE B
+
+### B.1 Paginación y sorting en Spring Data
+- Pageable, PageRequest
+- sort=name,asc
+- Pasarlo a Thymeleaf con page.number, page.totalPages, etc.
+- Hacer paginación en MVC + API REST
+- Ejemplo práctico con el listado de restaurantes o pedidos
+
+### B.2 JPQL + Query Methods
+
+- Save vs SaveAll
+- Introducción a JPQL 
+- Ejemplos con joins
+- Resolver queries complejas del examen
+- Cuándo usar @Query
+- Métodos por convención
+- Búsquedas con filtros
+- Transacciones en JPA/Spring (@Transactional): qué son, para qué sirven y cuándo se aplican
+
+## BLOQUE C
+
+### C.1 Recuperar DTO y ErrorDTO usando WebClient
+
+- retrieve() vs exchangeToMono()
+- Procesar error 400/404 de forma limpia
+- Mapear ErrorDTO
+- Integrarlo en MVC (mostrar error en pantalla)
+
+### C.2 JJWT
+
+- Refresh Tokens
+- Expiración real en el servidor (control server-side)
+- Blacklist de tokens al cerrar sesión (opcional)
+
+**POST /auth/login**
+- Recibe username/password
+- Genera access token (corto)
+- Genera refresh token (largo)
+- Guarda refresh token en BD
+
+**POST /auth/refresh**
+
+- Recibe refresh token
+- Valida en BD
+- Genera nuevo access token
+- (Opcional: regenerar también el refresh token)
+
+**POST /auth/logout**
+
+- Borra el refresh token de BD
+- Opcional: añade el access token actual a blacklist
+
+```
+| Token         | Duración      | Uso                        |
+| ------------- | ------------- | -------------------------- |
+| Access Token  | 10–15 minutos | Llamadas normales a la API |
+| Refresh Token | 7–30 días     | Renovar sesión             |
+
+```
+
+### C.3 Llamada a API pública
+
+- Ejemplo con TheMealDB API o DogCEO
+- Llamada con WebClient
+- Convertir JSON a DTO
+- Mostrarlos en Thymeleaf
+- Endpoint /public/meals?name=burger
+
+## BLOQUE D — Upload/Storage de ficheros, caché, loggin, email..
+
+### D.1 Upload de imágenes / MultipartFile
+
+- Formulario con ```<input type="file">```
+- Manejo en controller (MultipartFile)
+- Guardarlo en /uploads o en base64
+- Mostrarlo en la web.
+- Muy útil para el proyecto FoodExpress (fotos de restaurantes, platos…).
+
+### D.2 Caching + Logging
+
+- @Cacheable para búsquedas típicas
+- Logging con SLF4J. AOP (Programación Orientada a Aspectos)
+    - AOP permite ejecutar código automáticamente antes o después de ciertos métodos, sin modificar esos métodos.
+- Buena práctica: logs de error, info, debug.
+
+### D.3 Envío de email básico
+
+- Spring Mail sender
+- Plantilla simple
+- Ejemplo: email de confirmación de registro
+
+### D.4 Spring Data Rest + Swagger/OpenAPI
+
+- Mostrar cómo Spring genera una API REST completa
+- Paginated + HATEOAS
+- Integrarlo con Swagger UI
+
+
+---
+
+# 4. Dockerizar todo el entorno
 `
 Un docker-compose.yml con 3 contenedores principales:
 
@@ -634,7 +777,7 @@ Un docker-compose.yml con 3 contenedores principales:
 
 ---
 
-# 4. Microservicios
+# 5. Microservicios
 
 | Tema            | API REST (monolito) | Microservicios            |
 | --------------- | ------------------- | ------------------------- |
