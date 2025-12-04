@@ -628,6 +628,8 @@ Panel de administración /admin con opciones para:
     - Clientes más activos.
     - Los datos se obtienen mediante endpoints avanzados del API REST y se presentan en tablas o gráficos (por ejemplo, con Chart.js).
 
+--- 
+
 # 3. Continuará....
 
 Spring II: https://github.com/profeMelola/ProyectoFoodExpress
