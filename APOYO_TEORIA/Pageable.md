@@ -132,7 +132,7 @@ El parámetro sort permite ordenar por un único campo o varios campos.
 
 Si tienes más de un campo de ordenación, se pueden agregar más parámetros sort separados por comas, por ejemplo:
 
-- **GET /list-dto?page=0&size=10&sort=nombre,asc,precio,desc**
+- **GET /list-dto?page=0&size=10&sort=nombre,asc&sort=precio,desc**
 
 
 ## Validación de los parámetros page y size
