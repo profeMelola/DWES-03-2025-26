@@ -2,12 +2,12 @@
 
 El API Stream de Java (introducido en Java 8) es una forma moderna y funcional de trabajar con colecciones de datos (listas, conjuntos, etc.) de manera más declarativa y limpia.
 
-👉 En lugar de decir **“cómo hacerlo”** (bucles for), decimos **“qué queremos hacer”** sobre los datos.
+En lugar de decir **“cómo hacerlo”** (bucles for), decimos **“qué queremos hacer”** sobre los datos.
 
-✅ Código más limpio y fácil de leer
-✅ Evita bucles anidados
-✅ Facilita operaciones sobre datos (filtrar, transformar, agrupar)
-✅ Permite paralelizar (con .parallelStream())
+- Código más limpio y fácil de leer
+- Evita bucles anidados
+- Facilita operaciones sobre datos (filtrar, transformar, agrupar)
+- Permite paralelizar (con .parallelStream())
 
 Más información [Programación Funcional](https://github.com/profeMelola/DWES-02-2025-26/blob/main/APOYO_TEORIA/Interfaces%20funcionales%20y%20lambdas.md)
 
